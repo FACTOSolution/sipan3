@@ -76,6 +76,7 @@ def register(request):
 			user = new_user.save()
 			user.password = hs.make_password(request.POST.get('password', False))
 			user.confirmation_code = get_random_string(length=16)
+			user.is_active = True
 			user.save()
 			assign_role(user, 'student')
 			msg = u'Para confirmar a sua inscrição clique no link \n dominio/confirm/' + str(user.confirmation_code) + "/" + str(user.id)
@@ -226,13 +227,14 @@ def del_student(request,user_id):
 	user = get_object_or_404(UserProfile, id=request.session['member_id'])
 	if has_permission(user, 'list_all_students'):
 		user_d = get_object_or_404(UserProfile, id=user_id)
-		user_d.delete()
-		if not has_permission(x, 'add_new_admins'):
+		if not has_permission(user_d, 'add_new_admins'):
 			registered -= 1
-			if x.is_active:
+			if user_d.is_active:
 				confirmed -= 1
-			if x.had_paid:
+			if user_d.had_paid:
 				paid -= 1
+		user_d.delete()
+
 		return redirect(list_students,page=1)
 	else:
 		return redirect(home)

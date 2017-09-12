@@ -45,9 +45,9 @@ def pdf_gen(request):
 
 def home(request):
 	#testado e funcionando
-	scs = Minicurso.objects.all()
+	#scs = Minicurso.objects.all()
 	talks = Talk.objects.all()
-	return render(request, 'site_functions/home.html', {'log':request.session, 'talks':talks, 'scs':scs})
+	return render(request, 'site_functions/home.html', {'log':request.session, 'talks':talks})
 
 def register(request):
 	#testado e funcionando
@@ -108,7 +108,7 @@ def admin_register(request):
 			user.password = hs.make_password(request.POST.get('password', False))
 			user.confirmation_code = get_random_string(length=16)
 			user.save()
-			msg = u'Para confirmar a sua inscrição clique no link \n www.jornadadequimicaufpi.com.br/confirm/' + str(user.confirmation_code) + "/" + str(user.id)
+			msg = u'Para confirmar a sua inscrição clique no link \n dominio/confirm/' + str(user.confirmation_code) + "/" + str(user.id)
 			send_email('Confirmação de inscrição',msg,user.email)
 			assign_role(user, 'admin')
 			return redirect(list_admins)
@@ -247,7 +247,7 @@ def list_admins(request):
 					'log': request.session})
 	else:
 		return redirect(home)
-
+"""
 def list_short_courses(request):
 	user = get_object_or_404(UserProfile, id=request.session['member_id'])
 	if has_permission(user, 'edit_short_course'):
@@ -275,7 +275,7 @@ def list_users_by_sc(request, short_course_id):
 					'log': request.session})
 	else:
 		return redirect(home)
-
+"""
 def list_talks(request):
 	user = get_object_or_404(UserProfile, id=request.session['member_id'])
 	if has_permission(user, 'edit_short_course'):
@@ -319,7 +319,7 @@ def accept_article(request, user_id, article_id):
 		return render(request, 'site_functions/article_revision.html', {'form': article_form,
 					'log': request.session})
 
-
+"""
 def register_short_course(request):
 	if request.method == 'POST':
 		new_short_course = ShortCourseForm(request.POST, request.FILES)
@@ -339,14 +339,14 @@ def short_course_detail(request, short_course_id):
 	user = get_object_or_404(UserProfile, id = request.session['member_id'])
 	return render(request, 'site_functions/short_course_details.html', {'short_course':short_course,
 			'log':request.session, 'user':user})
-
+"""
 def talk_detail(request, talk_id):
 	talk = get_object_or_404(Talk, id = talk_id)
 	print(talk.talk_name)
 	user = get_object_or_404(UserProfile, id = request.session['member_id'])
 	return render(request, 'site_functions/talk_details.html', {'talk':talk,
 			'log':request.session, 'user':user})
-
+"""
 def edit_short_course(request, short_course_id):
 	sc_form = get_object_or_404(Minicurso, id=short_course_id)
 	if request.method == 'POST':
@@ -370,7 +370,7 @@ def edit_short_course(request, short_course_id):
 			form = ShortCourseForm(instance=sc_form)
 			return render(request, 'site_functions/edit_short_course.html',
 			{'short_course':short_course, 'log':request.session, 'user':user, 'form':form})
-
+"""
 def edit_talk(request, talk_id):
 	talk_form = get_object_or_404(Talk, id=talk_id)
 	if request.method == 'POST':

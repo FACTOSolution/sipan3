@@ -1,0 +1,115 @@
+{% extends 'site_functions/base.html' %}
+
+{% block content %}
+{% load bootstrap %}
+
+  <br><br><br><br>
+
+  <div class="container">
+
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="text-center bottom-block" id="hamurz-title">jornada de quimica</h1>
+      </div>
+    </div>
+    <br><br>
+    {% if not status %}
+    <div class="row">
+      <div class="col-sm-4"></div>
+      <div class="col-sm-4">
+        <b><h1 class="text-center">Cadastro</h1></b>
+        <form method="POST" enctype="multipart/form-data" class="post-form" name='f'>
+        {% csrf_token %}
+        {% if msg %}
+          <div class='alert alert-info'>{{msg}}</div>
+        {% endif %}
+          <div class="form-group">{{ form|bootstrap }}</div>
+          <div class='alert alert-info'>Só é possível escolher, no máximo, um minicurso par e um ímpar.</div>
+          <div class='alert alert-info'>Minicursos com vagas limitadas.</div>
+          <button type="submit" class="save btn btn-primary">Salvar</button>
+        </form>
+      </div>
+      <div class="col-sm-4">
+      </div>
+    </div>
+
+    <br><br>
+
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-8">
+        <div class='alert alert-info'>A inscrição normal custa RS 30.00 + 1kg de alimente não perecível ou ração, e garante acesso as palestras e 1 minicurso, um minicurso adcional custará RS 10.00</div>
+        <div class='alert alert-info'>A inscrição + alojamento custa RS 45.00 + 1kg de alimente não perecível ou ração, e garante acesso as palestras e 1 minicurso, um minicurso adcional custará RS 10.0</div>
+      </div>
+      <div class="col-sm-2"></div>
+    </div>
+
+    {% else %}
+      <div class='alert alert-info'>Vagas Esgotadas! Até a próxima Jornada de Química!</div>
+    {% endif %}
+
+  </div>
+
+  <br><br>
+
+  <script>
+        function formater() { //123.456.789- //made by Jeotaro
+            var original = (f.cpf.value);
+            original = original.replace(/\.|-/ig, '');
+            var tam = [3, 6, 9];
+            var s = ['.', '.', '-'];
+            var result = "";
+            tam.map(function(m, i) {
+                result += (original.substring(3 * (Math.floor(m / 3) - 1), m) + ((original.length >= m + 1) ? s[i] : ''));
+            });
+            result += ((original.length > 9) ? original.substring(9, original.length) : '');
+            f.cpf.value = result;
+        }
+
+        var countChecked = 0;
+        var limiteCurso = 2;
+        var boxs_checked = document.getElementsByName("minicursos");
+        var context = {{mns}};
+        boxs_checked.forEach(
+            function(o) {
+              for (i = 0; i < context.length; i++) {
+                if (o.value == context[i][0]){
+                  document.getElementById(o.id).disabled = true;
+                }
+                  }
+
+                });
+
+        boxs_checked.forEach(
+            function(o) {
+                o.onclick = function() {
+                    if(o.checked == false){
+                        countChecked--;
+                    }else if (countChecked == limiteCurso) {
+                        o.checked = false;
+                        alert("Você só pode escolher até " + limiteCurso + " minicursos.");
+                    } else {
+                        countChecked++;
+                    }
+                }});
+
+                boxs_checked.forEach(
+                    function(o) {
+                        o.onclick = function() {
+                          if (o.value % 2 == 0){
+                            for (i = 0; i < boxs_checked.length; i++) {
+                              if(boxs_checked[i].value % 2 == 0 && !(boxs_checked[i].value == o.value)){
+                                document.getElementById(boxs_checked[i].id).checked = false;
+                              }
+                            }
+                          } else{
+                            for (i = 0; i < boxs_checked.length; i++) {
+                              if(boxs_checked[i].value % 2 != 0 && !(boxs_checked[i].value == o.value)){
+                                document.getElementById(boxs_checked[i].id).checked = false;
+                              }
+                            }
+                          }
+                        }});
+    </script>
+
+{% endblock %}

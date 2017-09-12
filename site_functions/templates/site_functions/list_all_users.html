@@ -1,0 +1,21 @@
+{% extends 'site_functions/base.html' %}
+
+{% block content %}
+
+<b><h1>Usuários Cadastrados</h1></b>
+
+<div>
+  
+  
+  <ul>
+    {% for user in users %}
+    <li><a href="{% url 'user_detail' user_id=user.id %}">{{user.name}}</a></li>
+    {% endfor %}
+
+  </ul>
+
+</div>
+
+
+
+{% endblock %}

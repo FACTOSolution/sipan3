@@ -1,0 +1,13 @@
+{% extends 'site_functions/base.html' %}
+
+{% block content %}
+{% load bootstrap %}
+<br><br><br>
+<form method="POST" enctype="multipart/form-data" class="post-form">
+{% csrf_token %}
+  <div class="form-group">{{ form|bootstrap }}
+  <button type="submit" class="save btn btn-default">Salvar</button>
+  </div>
+</form>
+
+{% endblock %}

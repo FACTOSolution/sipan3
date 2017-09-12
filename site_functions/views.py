@@ -18,6 +18,10 @@ from django.template.loader import render_to_string
 
 from weasyprint import HTML
 
+registered = 0
+confirmed = 0
+paid = 0
+
 def pdf_gen(request):
 	actual_user = get_object_or_404(UserProfile, id = request.session['member_id'])
 	if has_permission(actual_user,'retrieve_any_student'):
@@ -73,8 +77,8 @@ def register(request):
 			user.password = hs.make_password(request.POST.get('password', False))
 			user.confirmation_code = get_random_string(length=16)
 			user.save()
-			assign_role(user, 'students')
-			msg = u'Para confirmar a sua inscrição clique no link \n www.jornadadequimicaufpi.com.br/confirm/' + str(user.confirmation_code) + "/" + str(user.id)
+			assign_role(user, 'student')
+			msg = u'Para confirmar a sua inscrição clique no link \n dominio/confirm/' + str(user.confirmation_code) + "/" + str(user.id)
 			send_email('Confirmação de inscrição',msg,user.email)
 			message = "Você foi cadastrado(a). Em breve receberá um email para confirmação de cadastro. Clique no link recebido para confirmar e acessar sua conta."
 			return render(request, 'site_functions/register.html', {'form': new_user, 'log':request.session, 'mns':esgoted_list, 'status': esgoted, 'msg':message})
@@ -127,7 +131,7 @@ def user_login(request):
 						request.session['is_admin'] = True
 					return redirect(home)
 				else:
-				    return render(request, 'site_functions/login.html', {'message': 'Usuario não está ativo.'})
+					return render(request, 'site_functions/login.html', {'message': 'Usuario não está ativo.'})
 			else:
 				return render(request, 'site_functions/login.html', {'message': 'Senha incorreta. Tente novamente.'})
 	return render(request, 'site_functions/login.html', {'message': 'Entre com seu email e senha.'})
@@ -190,11 +194,11 @@ def user_detail(request, user_id):
 
 def list_students(request,page):
 	#testado e funcionando
+	global registered
+	global confirmed
+	global paid
 	user = get_object_or_404(UserProfile, id=request.session['member_id'])
 	if has_permission(user, 'list_all_students'):
-		registered = 0
-		confirmed = 0
-		paid = 0
 		for x in UserProfile.objects.all():
 			if not has_permission(x, 'add_new_admins'):
 				registered += 1
@@ -205,24 +209,33 @@ def list_students(request,page):
 		Users = UserProfile.objects.filter(groups__name='student')
 		paginator = Paginator(Users,10)
 		try:
-		    users = paginator.page(page)
+			users = paginator.page(page)
 		except PageNotAnInteger:
-		    users = paginator.page(1)
+			users = paginator.page(1)
 		except:
-		    users = paginator.page(paginator.num_pages)
+			users = paginator.page(paginator.num_pages)
 		return render(request, 'site_functions/inscritos.html', {'users': users,
 					'log': request.session, 'max':registered, 'ok':confirmed, 'paid': paid})
 	else:
 		return redirect(home)
 
 def del_student(request,user_id):
-    user = get_object_or_404(UserProfile, id=request.session['member_id'])
-    if has_permission(user, 'list_all_students'):
-	    user_d = get_object_or_404(UserProfile, id=user_id)
-	    user_d.delete()
-	    return redirect(list_students,page=1)
-    else:
-	    return redirect(home)
+	global registered
+	global confirmed
+	global paid
+	user = get_object_or_404(UserProfile, id=request.session['member_id'])
+	if has_permission(user, 'list_all_students'):
+		user_d = get_object_or_404(UserProfile, id=user_id)
+		user_d.delete()
+		if not has_permission(x, 'add_new_admins'):
+			registered -= 1
+			if x.is_active:
+				confirmed -= 1
+			if x.had_paid:
+				paid -= 1
+		return redirect(list_students,page=1)
+	else:
+		return redirect(home)
 
 def list_admins(request):
 	user = get_object_or_404(UserProfile, id=request.session['member_id'])

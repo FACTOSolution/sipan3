@@ -10,7 +10,7 @@ class UserForm(forms.ModelForm):
 		(0,'Nao'),
  	)
 
-	have_article = forms.TypedChoiceField(label='Vai enviar trabalho?',
+	have_article = forms.TypedChoiceField(label='Vai submeter trabalho?',
 						 choices=choices, widget=forms.RadioSelect, coerce=int
 					)
 	## MUDANÇAS FEITAS POR MIM(KÁSSIO)##
@@ -28,16 +28,10 @@ class UserForm(forms.ModelForm):
 	phone = forms.CharField(label='Telefone', widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	#adicionei essa linha de EMAIL
 	email = forms.EmailField(widget=forms.TextInput(attrs={'class' : 'form-control'}))
-	#adicionei essa linha com as MODALIDADES
-	modalidade = forms.ChoiceField(choices=UserProfile.MODALIDADE_CHOICES, widget=forms.Select(attrs={'class' : 'form-control'}))
-	have_home = forms.BooleanField(required=False,label="Quero Alojamento")
 
 	class Meta:
 		model = UserProfile
-		fields = ('name','instituicao', 'cpf','phone','password','email','modalidade','have_article', 'minicursos','have_home')
-		widgets = {
-			'minicursos': forms.CheckboxSelectMultiple(),
-		}
+		fields = ('name','instituicao', 'cpf','phone','password','email','have_article')
 
 class AdminForm(forms.ModelForm):
 

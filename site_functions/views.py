@@ -44,7 +44,7 @@ def home(request):
 	scs = Minicurso.objects.all()
 	talks = Talk.objects.all()
 	return render(request, 'site_functions/home.html', {'log':request.session, 'talks':talks, 'scs':scs})
-"""
+
 def register(request):
 	#testado e funcionando
 	limit_sc = [110, 43, 65, 65]
@@ -73,7 +73,7 @@ def register(request):
 			user.password = hs.make_password(request.POST.get('password', False))
 			user.confirmation_code = get_random_string(length=16)
 			user.save()
-			assign_role(user, 'student')
+			assign_role(user, 'students')
 			msg = u'Para confirmar a sua inscrição clique no link \n www.jornadadequimicaufpi.com.br/confirm/' + str(user.confirmation_code) + "/" + str(user.id)
 			send_email('Confirmação de inscrição',msg,user.email)
 			message = "Você foi cadastrado(a). Em breve receberá um email para confirmação de cadastro. Clique no link recebido para confirmar e acessar sua conta."
@@ -81,7 +81,7 @@ def register(request):
 	else:
 		new_user = UserForm()
 	return render(request, 'site_functions/register.html', {'form': new_user, 'log':request.session, 'mns':esgoted_list, 'status': esgoted, 'msg':message})
-"""
+
 def confirm(request, confirmation_code, user_id):
 	try:
 		user = get_object_or_404(UserProfile, id=user_id)
@@ -95,7 +95,6 @@ def confirm(request, confirmation_code, user_id):
 		return redirect(home)
 
 def admin_register(request):
-	#testado e funcionando
 	actual_user = get_object_or_404(UserProfile, id = request.session['member_id'])
 	if request.method == "POST":
 		new_admin = AdminForm(request.POST)

@@ -42,16 +42,12 @@
 									<tr>
 										<td>Artigo</td>
 										<td>
-										{% if not articles %}
 											{% if user.have_article %}
-											    {% if articles.count < 1 %}
 												<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ArticleModal">
 													Enviar Resumo
 												</button>
 												<br><h6>*Formatos aceitos: pdf</h6>
 												{% endif %}
-											{% endif %}
-										{% endif %}
 										{% if not user.have_article %}
 											Não vai enviar trabalho.
 										{% elif not articles %}

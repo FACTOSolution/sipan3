@@ -292,7 +292,7 @@ def mark_payment(request, user_id):
 		user_p = get_object_or_404(UserProfile, id=user_id)
 		user_p.had_paid = True
 		user_p.save()
-		msg = u"Prezado (a) " + user_p.name + u" Informamos a confirmação do pagamento na Jornada de Química. Aproveite o evento e agradecemos a participação. A Comissão Organizadora"
+		msg = u"Prezado (a) " + user_p.name + u" texto de confirmação de pagamento"
 		send_email('Confirmação de pagamento',msg,user_p.email)
 		return redirect(user_detail,user_id)
 
@@ -307,10 +307,10 @@ def accept_article(request, user_id, article_id):
 				article_p.accepted = article_form.cleaned_data['accepted']
 				article_p.save()
 				if (article_form.cleaned_data['accepted'] == 1):
-					msg = u"Prezado (a) " + str(user.name) + u"\n A Comissão Organizadora da Jornada de Química informa que o trabalho " + str(article_p.title) + u" foi aceito. Agradecemos a participação\n" + u"Feedback: " +  str(article_form.cleaned_data['revision'])
+					msg = u"Prezado (a) " + str(user.name) + u"\n TEXTO de aceite do trabalho " + str(article_p.title) + u" foi aceito. Agradecemos a participação\n" + u"Feedback: " +  str(article_form.cleaned_data['revision'])
 				elif(article_form.cleaned_data['accepted'] == 0):
-					msg = u"Prezado (a) " + str(user.name) + u"\n A Comissão Organizadora da Jornada de Química, informa que o trabalho "+ str(article_p.title) + u" não esteve dentro dos parâmetros requeridos pelo evento, por isso não foi aceito. Embora, agradecemos a participação\n" + u"Feedback: " +  str(article_form.cleaned_data['revision'])
-				send_email('Avaliação do artigo - Quimica',msg,user_p.email)
+					msg = u"Prezado (a) " + str(user.name) + u"\n texto da rejeição do trabalho  "+ str(article_p.title) + u" não esteve dentro dos parâmetros requeridos pelo evento, por isso não foi aceito. Embora, agradecemos a participação\n" + u"Feedback: " +  str(article_form.cleaned_data['revision'])
+				send_email('Avaliação do artigo - 3º Sipan',msg,user_p.email)
 				return redirect(list_students)
 		else:
 			return redirect(home)

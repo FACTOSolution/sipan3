@@ -40,20 +40,7 @@
 										<td>{{ user.phone }}</td>
 									</tr>
 									<tr>
-										<td>Modalidade Da Inscrição</td>
-										<td>{{ user.modalidade }}</td>
-									</tr>
-									<tr>
-										<td>Minicursos</td>
-										<td>
-										{% for s in scs.all %}
-											{{s.name}}
-											<br>
-										{% endfor %}
-										</td>
-									</tr>
-									<tr>
-										<td>Resumo</td>
+										<td>Artigo</td>
 										<td>
 										{% if not articles %}
 											{% if user.have_article %}
@@ -83,7 +70,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td>Comprovante</td>
+										<td>Comprovante de depósito bancário</td>
 										<td>
 											{% if user.comprovante != "False" %}
 												<ol><a target='_blank' href={% url 'download' path=user.comprovante %} class="btn btn-sm btn-warning">Download Recibo</a></ol>
@@ -140,7 +127,7 @@
 									</tr>
 									<tr>
 										<td>Dúvidas? Fale Conosco pelo noso email!</td>
-										<td>jqufpi@gmail.com</td>
+										<td>contato</td>
 									</tr>
 								</tbody>
 							</table>

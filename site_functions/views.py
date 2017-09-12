@@ -130,7 +130,7 @@ def user_login(request):
 					request.session['member_id'] = user.id
 					if has_permission(user, 'add_new_admins'):
 						request.session['is_admin'] = True
-						redirect(list_students,page=1)
+						return redirect(list_students, page=1)
 					return redirect(user_detail,user_id=user.id)
 				else:
 					return render(request, 'site_functions/login.html', {'message': 'Usuario não está ativo.'})

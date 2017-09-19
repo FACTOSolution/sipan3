@@ -47,6 +47,14 @@
   font-size: 1.5em;
 }
 
+.realizacao {
+	max-height: 130px;
+}
+
+.prex {
+	max-height: 180px; 	
+}
+
 @media screen and (max-width: 768px) {
   #apresentacao {
   	background: url(../img/back-apresentacao-small.jpg);

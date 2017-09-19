@@ -1,6 +1,6 @@
-# Third Sipan Site
+# Third SIPPAN Site
 
-Description Here
+SIPPAN is an event of a technical-scientific nature, held annually by the Graduate Program in Food and Nutrition (PPGAN) of the Federal University of Piauí.
 
 ## Dependency
 

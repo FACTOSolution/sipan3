@@ -1,0 +1,21 @@
+#cronograma {
+	background: url(../img/nutrição.jpg);
+	background-size:100% 100%;
+	background-repeat: no-repeat;
+
+	height: 800px;
+
+}
+
+.titulo {
+	color: #e2f9fb;
+	font-size: 3em;
+}
+
+.cor {
+	color: #e2f9fb;
+}
+
+.texto-centro {
+	text-align: center;
+}

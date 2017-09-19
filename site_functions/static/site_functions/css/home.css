@@ -1,0 +1,58 @@
+#apresentacao {
+	background: url(../img/back-apresentacao.jpg);
+	background-size:100% 100%;
+	background-repeat: no-repeat;
+	margin-top: 50px;
+  min-height: 700px;
+}
+
+#sobre {
+	margin-top: -5px;
+	background: url(../img/back-sobre.svg);
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+#local {
+	background: #001719;
+}
+
+#local-titulo {
+	text-align: center;
+	color: #e2f9fb;
+}
+
+#data-evento {
+	text-align: center;
+	font-size: 1.4em;
+	color: #e2f9fb;
+}
+
+.titulo {
+	color: #1adef0;
+}
+
+.section_title {
+	text-align: center;
+	padding: 10px;
+  color: #151818;
+  font-size: 3.0em;
+  font-family: 'Roboto Slab', serif;
+}
+
+.about {
+	text-align: justify;
+  font-family: 'helvetica';
+  color: #151818;
+  font-size: 1.5em;
+}
+
+@media screen and (max-width: 768px) {
+  #apresentacao {
+  	background: url(../img/back-apresentacao-small.jpg);
+  	background-size:100% 100%;
+		background-repeat: no-repeat;
+		margin-top: 50px;
+    min-height: 700px;
+  }
+}

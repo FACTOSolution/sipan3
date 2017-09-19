@@ -1,22 +1,26 @@
-#hamurz {
-  font-family: "hamurz";
-}
-
-#hamurz-title {
-  font-family: "hamurz";
-  font-size: 96px;
-  background-color: white;
-  padding-top: 20px;
-}
-
-@font-face {
-  font-family: "hamurz";
-  src: url("../fonts/hamurz/Hamurz Free Version.otf");
-}
-
 #barra-navegacao {
-  background-color: black; 
+  background: #212121;
 }
+
+#titulo-pagina {
+  font-weight: bold;
+  color: #5bc6d0;
+}
+
+#lista-navegacao {
+  font-size: 1.2em;
+  color: #f2fefd;
+}
+
+#rodape {
+  background: #01579b;
+}
+
+
+.cor-padrao {
+  color: #5bc6d0;
+}
+
 
 .header_bound {
   width: 100%;
@@ -47,12 +51,6 @@
   font-size: 3.5em;
   font-family: 'Roboto Slab', serif;
   font-weight: bold;
-}
-
-.section_title {
-  color: #424242;
-  font-size: 3.5em;
-  font-family: 'Roboto Slab', serif;
 }
 
 .line{

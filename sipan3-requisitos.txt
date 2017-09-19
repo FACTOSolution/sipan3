@@ -1,0 +1,20 @@
+Cor predominante de preferência para o site.
+
+Textos para colocar no site:
+	Descrição do evento;
+	Data do evento;
+	Data das incrições;
+	Cronograma do evento;
+	Nome das atividades e descrições;
+	Nome das palestras e descrições;
+	Nome e informações sobre os palestrantes e outros participantes especiais do evento;
+	Nome dos Patrocinadores, Apoiadores e Realizadores;
+
+Informações para participantes:
+	Preço da inscrição;
+	Subimissão de trabalhos;
+
+Imagens para colocar no site:
+	Logo do evento (se possuir);
+	Fotos ou imagens que queiram colocar no site;
+	Logo dos Patrocinadores, Apoiadores e Realizadores;

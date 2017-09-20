@@ -60,7 +60,7 @@ class ArticleForm(forms.ModelForm):
 	title = forms.CharField(label=("Titulo do artigo"))
 	document = forms.FileField(label="Arquivo")
 	string = "Digite o nome dos autores separados por ponto e virgula em ordem de importância.\
- Até 5 (cinco) nomes: 1 autor e 4 colaboradores."
+ Até 8 (oito) autores."
 	autores = forms.CharField(label="Autores", widget=forms.Textarea( attrs={'placeholder': string}))
 
 	class Meta:
@@ -77,9 +77,24 @@ class ArticleAnalisyForm(forms.Form):
 		(1,'Sim'),
 		(0,'Nao'),
  	)
+	CHOICES_EVALLUATION = (
+		(1,'1'),
+		(2,'2'),
+		(3,'3'),
+		(4,'4'),
+		(5,'5'),
+ 	)
 
-	revision = forms.CharField(widget=forms.Textarea)
-	accepted = forms.TypedChoiceField(label='Aceito ?',
+	originalidade = forms.ChoiceField(label=u'Originalidade e relevância do trabalho', choices=CHOICES_EVALLUATION)
+	titulo = forms.ChoiceField(label=u'Clareza e objetividade do título', choices=CHOICES_EVALLUATION)
+	introducao = forms.ChoiceField(label=u'Contextualização adequada da introdução', choices=CHOICES_EVALLUATION)
+	objetivo = forms.ChoiceField(label=u'Clareza, relevância e coerência do objetivo(s)', choices=CHOICES_EVALLUATION)
+	metodologia = forms.ChoiceField(label='Metodologia adequada e coerente com objetivos', choices=CHOICES_EVALLUATION)
+	resultados = forms.ChoiceField(label='Clareza na apresentação e discussão dos resultados', choices=CHOICES_EVALLUATION)
+	conclusao = forms.ChoiceField(label='Conclusão coerente', choices=CHOICES_EVALLUATION)
+
+	revision = forms.CharField(label="Comentários (opcional)",widget=forms.Textarea)
+	accepted = forms.TypedChoiceField(label='Aceito?',
 						 choices=choices, widget=forms.RadioSelect, coerce=int
 					)
 

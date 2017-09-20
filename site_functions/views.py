@@ -52,7 +52,7 @@ def home(request):
 def register(request):
 	#testado e funcionando
 	limit_sc = [110, 43, 65, 65]
-	limit_users = 250
+	limit_users = 170
 	esgoted = False
 	registereds = 0
 	for x in UserProfile.objects.all():
@@ -78,7 +78,7 @@ def register(request):
 			user.confirmation_code = get_random_string(length=16)
 			user.is_active = True
 			user.save()
-			assign_role(user, 'admin')
+			assign_role(user, 'student')
 			msg = u'Para confirmar a sua inscrição clique no link \n dominio/confirm/' + str(user.confirmation_code) + "/" + str(user.id)
 			send_email('Confirmação de inscrição',msg,user.email)
 			message = "Você foi cadastrado(a). Em breve receberá um email para confirmação de cadastro. Clique no link recebido para confirmar e acessar sua conta."

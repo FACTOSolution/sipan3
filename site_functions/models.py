@@ -94,6 +94,17 @@ class Article (models.Model):
 		default=False,
 	)
 
+	#criterios de avaliação
+	originalidade = models.PositiveSmallIntegerField(default=1)
+	titulo = models.PositiveSmallIntegerField(default=1)
+	introducao = models.PositiveSmallIntegerField(default=1)
+	objetivo = models.PositiveSmallIntegerField(default=1)
+	metodologia = models.PositiveSmallIntegerField(default=1)
+	resultados = models.PositiveSmallIntegerField(default=1)
+	conclusao = models.PositiveSmallIntegerField(default=1)
+
+
+
 	accepted = models.BooleanField(default=False)
 
 	document = models.FileField(upload_to='articles/', default=False, validators=[validate_article_type])

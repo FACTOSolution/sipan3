@@ -10,6 +10,11 @@ class UserForm(forms.ModelForm):
 		(0,'Nao'),
  	)
 
+	MODALIDADE_CHOICES = (
+	('EST', u'Estudante'),
+	('PRO', u'Profissional')
+,)
+
 	have_article = forms.TypedChoiceField(label='Vai submeter trabalho?',
 						 choices=choices, widget=forms.RadioSelect, coerce=int
 					)
@@ -19,7 +24,7 @@ class UserForm(forms.ModelForm):
 	#adicionei o parametro com a Classe form-control
 	password = forms.CharField(label=("Senha"), widget=forms.PasswordInput(attrs={'placeholder' : 'Digite sua senha.', 'class' : 'form-control'}))
 	#adicionei o parametro com a Classe form-control
-	name = forms.CharField(label='Nome', widget=forms.TextInput(attrs={'class' : 'form-control'}))
+	name = forms.CharField(label='Nome Completo', widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	#adicionei o parametro com a Classe form-control
 	instituicao = forms.CharField(label='Instituicao', widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	#adicionei o parametro com a Classe form-control
@@ -28,10 +33,12 @@ class UserForm(forms.ModelForm):
 	phone = forms.CharField(label='Telefone', widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	#adicionei essa linha de EMAIL
 	email = forms.EmailField(widget=forms.TextInput(attrs={'class' : 'form-control'}))
+	modalidade = forms.ChoiceField(label='Modalidade de Inscrição', choices=MODALIDADE_CHOICES,
+	 				widget=forms.Select(attrs={'onchange':'choiceFunc()'}))
 
 	class Meta:
 		model = UserProfile
-		fields = ('name','instituicao', 'cpf','phone','password','email','have_article')
+		fields = ('name', 'pronome_tratamento', 'cpf','email','phone','modalidade','instituicao', 'curso','profissao', 'local_de_atuacao','password','have_article')
 
 class AdminForm(forms.ModelForm):
 

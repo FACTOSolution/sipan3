@@ -19,13 +19,24 @@ class Minicurso (models.Model):
 class UserProfile (AbstractBaseUser, PermissionsMixin):
 
 	MODALIDADE_CHOICES = (
-	('GRA', u'Estudante de Graduacao'),
-	('PGR', u'Estudante de Pos-Graduacao'),
+	('EST', u'Estudante'),
 	('PRO', u'Profissional')
 ,)
+
+	PRONOME_CHOICES = (
+	('Senhor', u'Senhor'),
+	('Senhora', u'Senhora'),
+	('Senhorita', u'Senhorita'),
+	('Doutor', u'Doutor'),
+	('Doutora', u'Doutora')
+,)
+
 	minicursos = models.ManyToManyField(Minicurso)
 	name = models.CharField(max_length=100)
-	instituicao = models.CharField(max_length=200)
+	curso = models.CharField(max_length=100, default="")
+	instituicao = models.CharField(max_length=200, default="")
+	local_de_atuacao = models.CharField(max_length=200, default="")
+	profissao = models.CharField(max_length=200, default="")
 	cpf = models.CharField(max_length=11)
 	#validacao de cpf usando a lib localflavors no forms.py
 	phone = models.CharField(max_length=11)
@@ -48,6 +59,12 @@ class UserProfile (AbstractBaseUser, PermissionsMixin):
 		max_length=3,
 		choices=MODALIDADE_CHOICES,
 		default=False,
+	)
+
+	pronome_tratamento = models.CharField(
+			max_length=10,
+			choices=PRONOME_CHOICES,
+			default=False,
 	)
 
 	def __str__(self):

@@ -1,0 +1,3 @@
+- mudar sipan para sippan
+- arrumar campos nos formulários
+- estilizar pagina de validação de trabalho

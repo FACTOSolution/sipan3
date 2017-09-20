@@ -186,9 +186,9 @@ def user_detail(request, user_id):
 
 def list_students(request,page):
 	#testado e funcionando
-	global registered
-	global confirmed
-	global paid
+	registered = 0
+	confirmed = 0
+	paid = 0
 	user = get_object_or_404(UserProfile, id=request.session['member_id'])
 	if has_permission(user, 'list_all_students'):
 		for x in UserProfile.objects.all():
@@ -212,18 +212,15 @@ def list_students(request,page):
 		return redirect(home)
 
 def del_student(request,user_id):
-	global registered
-	global confirmed
-	global paid
 	user = get_object_or_404(UserProfile, id=request.session['member_id'])
 	if has_permission(user, 'list_all_students'):
 		user_d = get_object_or_404(UserProfile, id=user_id)
-		if not has_permission(user_d, 'add_new_admins'):
+		"""if not has_permission(user_d, 'add_new_admins'):
 			registered -= 1
 			if user_d.is_active:
 				confirmed -= 1
 			if user_d.had_paid:
-				paid -= 1
+				paid -= 1"""
 		user_d.delete()
 
 		return redirect(list_students,page=1)

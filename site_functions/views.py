@@ -284,10 +284,10 @@ def mark_payment(request, user_id):
 		user_p.had_paid = True
 		user_p.save()
 		msg = u"Prezado "+ user_p.pronome_tratamento + " " + user_p.name + ", a sua inscrição \
-		no III Simpósio de Pós-graduação em Alimentos e Nutrição foi confirmada. \
-		\n\nAtenciosamente,  \
-		\nComissão Executiva do III SIPPAN.\n \
-		\nPara mais informações, entre em contato conosco através do site [colocar link]."
+no III Simpósio de Pós-graduação em Alimentos e Nutrição foi confirmada. \
+\n\nAtenciosamente,  \
+\nComissão Executiva do III SIPPAN.\n \
+\nPara mais informações, entre em contato conosco através do site [colocar link]."
 		send_email('Confirmação de pagamento',msg,user_p.email)
 		return redirect(user_detail,user_id)
 

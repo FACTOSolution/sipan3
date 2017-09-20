@@ -177,12 +177,7 @@ def user_detail(request, user_id):
 			user_retrieve = get_object_or_404(UserProfile, id=user_id)
 			receipt_form = ReceiptForm()
 			article_form = ArticleForm()
-			if user_retrieve.have_home:
-				price = 45
-			else:
-				price = 30
-			if user_retrieve.minicursos.count() > 0:
-				price = price + ((user_retrieve.minicursos.count() - 1) * 10)
+			price = 30
 			scs = user_retrieve.minicursos
 			articles_retrieve = Article.objects.all().filter(user=user_retrieve.id)
 			return render(request, 'site_functions/user_details.html', {'user': user_retrieve,

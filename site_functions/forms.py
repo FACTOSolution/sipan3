@@ -93,7 +93,7 @@ class ArticleAnalisyForm(forms.Form):
 	resultados = forms.ChoiceField(label='Clareza na apresentação e discussão dos resultados', choices=CHOICES_EVALLUATION)
 	conclusao = forms.ChoiceField(label='Conclusão coerente', choices=CHOICES_EVALLUATION)
 
-	revision = forms.CharField(label="Comentários (opcional)",widget=forms.Textarea)
+	revision = forms.CharField(label="Comentários (opcional)", required=False,widget=forms.Textarea)
 	accepted = forms.TypedChoiceField(label='Aceito?',
 						 choices=choices, widget=forms.RadioSelect, coerce=int
 					)

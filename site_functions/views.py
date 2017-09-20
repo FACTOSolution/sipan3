@@ -79,7 +79,11 @@ def register(request):
 			user.is_active = True
 			user.save()
 			assign_role(user, 'student')
-			msg = u'Para confirmar a sua inscrição clique no link \n dominio/confirm/' + str(user.confirmation_code) + "/" + str(user.id)
+			msg = u'Olá' + user.pronome_tratamento + ' ' + user.name + '.\n\nPara confirmar a sua inscrição no III Simpósio em Alimentos \
+			e Nutrição clique no link abaixo. \n\n dominio/confirm/' + str(user.confirmation_code) + "/" + str(user.id) + "\
+			\n\nAtenciosamente,  \
+			\nComissão Executiva do III SIPPAN.\n \
+			\nPara mais informações, entre em contato conosco através do site [colocar link]."
 			send_email('Confirmação de inscrição',msg,user.email)
 			message = "Você foi cadastrado(a). Em breve receberá um email para confirmação de cadastro. Clique no link recebido para confirmar e acessar sua conta."
 			return render(request, 'site_functions/register.html', {'form': new_user, 'log':request.session, 'mns':esgoted_list, 'status': esgoted, 'msg':message})

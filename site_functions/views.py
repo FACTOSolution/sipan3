@@ -168,12 +168,7 @@ def user_detail(request, user_id):
 		receipt_form = ReceiptForm()
 		article_form = ArticleForm()
 		scs = user.minicursos
-		if user.have_home:
-			price = 45
-		else:
-			price = 30
-		if user.minicursos.count() > 0:
-			price = price + ((user.minicursos.count() - 1) * 10)
+		price = 30
 		return render(request, 'site_functions/user_details.html', {'user': user,'articles':articles, 'log':request.session,
 			'form': receipt_form, 'formA': article_form, 'price': price, 'scs':scs})
 	else:

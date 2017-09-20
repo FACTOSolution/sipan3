@@ -31,6 +31,10 @@ class UserForm(forms.ModelForm):
 	cpf = fm.BRCPFField(label='CPF', widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	#adicionei o parametro com a Classe form-control
 	phone = forms.CharField(label='Telefone', widget=forms.TextInput(attrs={'class' : 'form-control'}))
+	instituicao = forms.CharField(label='Instituição',required=False, widget=forms.TextInput(attrs={'class' : 'form-control'}))
+	local_de_atuacao = forms.CharField(label='Local de Atuação',required=False, widget=forms.TextInput(attrs={'class' : 'form-control'}))
+	profissao = forms.CharField(label='Profissão',required=False, widget=forms.TextInput(attrs={'class' : 'form-control'}))
+	curso = forms.CharField(label='Curso',required=False, widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	#adicionei essa linha de EMAIL
 	email = forms.EmailField(widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	modalidade = forms.ChoiceField(label='Modalidade de Inscrição', choices=MODALIDADE_CHOICES,

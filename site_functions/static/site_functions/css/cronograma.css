@@ -18,3 +18,22 @@
 .texto-centro {
 	text-align: center;
 }
+
+.paragrafo {
+	font-size: 1.5em;
+}
+
+.horario {
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+.item {
+	padding-top: 10px;
+	padding-bottom: 10px; 
+}
+
+.linha {
+	color: black;
+	width: 10px;
+}

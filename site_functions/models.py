@@ -74,6 +74,7 @@ class Article (models.Model):
 	user = models.ForeignKey(UserProfile,  on_delete=models.CASCADE, default=False, related_name='Article_User')
 	title = models.CharField(max_length=100)
 	autores = models.TextField(max_length=300, default=False)
+	revision = models.TextField(max_length=300, default=False)
 
 	AREA_CHOICES = (
 	('QOR', u'Química Orgânica'),

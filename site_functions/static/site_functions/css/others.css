@@ -37,8 +37,7 @@
 }
 
 .horario {
-	font-weight: bold;
-	font-size: 1.5em;
+	font-size: 1.7em;
 }
 
 .item {
@@ -58,7 +57,7 @@
 #sombraclara {
 	width: 100%;
 	padding: 16px;
-	background-color: #a1bbbd;
+	background-color: #949FA0;
 	color: #fff;
 	
 	text-align: center;

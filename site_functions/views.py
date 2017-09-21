@@ -311,7 +311,7 @@ intitulado ' + article_p.title + '.\n\nParecer: '
 					msg += u"REJEITADO\n"
 				if article_p.revision:
 					msg += u"Comentários dos avaliadores: " + article_p.revision + "\n\n"
-				msg += "<b>Dados do trabalho</b> \nTítulo: " + article_p.title
+				msg += "Dados do trabalho \nTítulo: " + article_p.title
 				msg += "\nÁrea: A DEFINIR"
 				msg += "\nAutores: " + article_p.autores
 

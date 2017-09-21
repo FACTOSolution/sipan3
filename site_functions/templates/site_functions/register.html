@@ -1,89 +1,88 @@
 {% extends 'site_functions/base.html' %}
 
 {% block content %}
+{% load static %}
 {% load bootstrap %}
 
-  <br><br><br><br>
+<section id="cronograma">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="texto-centro titulo">III SIPPAN</h1>
+				<h1 class="texto-centro titulo">Cadastro</h1>
+			</div>
+		</div>
+	</div>
+</section>
 
-  <div class="container">
+<section>
+	<br><br>
+	<div class="container">
+		{% if not status %}
+			<div class="row">
+				<div class="col-sm-4"></div>
+				<div class="col-sm-4">
+					<form method="POST" enctype="multipart/form-data" class="post-form" name='f'>
+					{% csrf_token %}
+					{% if msg %}
+						<div class='alert alert-info'>{{msg}}</div>
+					{% endif %}
+						<div class="form-group">{{ form|bootstrap }}</div>
+						<button type="submit" class="save btn btn-primary">Submeter inscrição</button>
+					</form>
+				</div>
+				<div class="col-sm-4">
+				</div>
+			</div>
 
-    <div class="row">
-      <div class="col-md-12">
-        <h1 class="text-center bottom-block" id="hamurz-title">SIPAN</h1>
-      </div>
-    </div>
-    <br><br>
-    {% if not status %}
-    <div class="row">
-      <div class="col-sm-4"></div>
-      <div class="col-sm-4">
-        <b><h1 class="text-center">Cadastro</h1></b>
-        <form method="POST" enctype="multipart/form-data" class="post-form" name='f'>
-        {% csrf_token %}
-        {% if msg %}
-          <div class='alert alert-info'>{{msg}}</div>
-        {% endif %}
-          <div class="form-group">{{ form|bootstrap }}</div>
-          <button type="submit" class="save btn btn-primary">Submeter inscrição</button>
-        </form>
-      </div>
-      <div class="col-sm-4">
-      </div>
-    </div>
+			<br><br>
 
-    <br><br>
+			<div class="row">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-8">
+					<div class='alert alert-info'>Descrição da inscrição e valores.</div>
+				</div>
+				<div class="col-sm-2"></div>
+			</div>
+		{% else %}
+			<div class='alert alert-info'>Mensagem de vagas esgotadas.</div>
+		{% endif %}
+	</div>
+</section>
 
-    <div class="row">
-      <div class="col-sm-2"></div>
-      <div class="col-sm-8">
-        <div class='alert alert-info'>Descrição da inscrição e valores.</div>
-      </div>
-      <div class="col-sm-2"></div>
-    </div>
+<script>
+	function formater() { //123.456.789- //made by Jeotaro
+			var original = (f.cpf.value);
+			original = original.replace(/\.|-/ig, '');
+			var tam = [3, 6, 9];
+			var s = ['.', '.', '-'];
+			var result = "";
+			tam.map(function(m, i) {
+					result += (original.substring(3 * (Math.floor(m / 3) - 1), m) + ((original.length >= m + 1) ? s[i] : ''));
+			});
+			result += ((original.length > 9) ? original.substring(9, original.length) : '');
+			f.cpf.value = result;
+	}
+	
+	document.getElementById("id_local_de_atuacao").disabled=true;
+	document.getElementById("id_profissao").disabled=true;
 
-    {% else %}
-      <div class='alert alert-info'>Mensagem de vagas esgotadas.</div>
-    {% endif %}
+	function choiceFunc(){
+		var grad = document.getElementById("id_modalidade");
 
-  </div>
+		if(grad.selectedIndex==0){
+			document.getElementById("id_instituicao").disabled=false;
+			document.getElementById("id_curso").disabled=false;
+			document.getElementById("id_local_de_atuacao").disabled=true;
+			document.getElementById("id_profissao").disabled=true;
+		}else{
+			document.getElementById("id_instituicao").disabled=true;
+			document.getElementById("id_curso").disabled=true;
+			document.getElementById("id_local_de_atuacao").disabled=false;
+			document.getElementById("id_profissao").disabled=false;
+		}
 
-  <br><br>
-
-  <script>
-        function formater() { //123.456.789- //made by Jeotaro
-            var original = (f.cpf.value);
-            original = original.replace(/\.|-/ig, '');
-            var tam = [3, 6, 9];
-            var s = ['.', '.', '-'];
-            var result = "";
-            tam.map(function(m, i) {
-                result += (original.substring(3 * (Math.floor(m / 3) - 1), m) + ((original.length >= m + 1) ? s[i] : ''));
-            });
-            result += ((original.length > 9) ? original.substring(9, original.length) : '');
-            f.cpf.value = result;
-        }
-        
-        document.getElementById("id_local_de_atuacao").disabled=true;
-        document.getElementById("id_profissao").disabled=true;
-
-        function choiceFunc(){
-          var grad = document.getElementById("id_modalidade");
-
-          if(grad.selectedIndex==0){
-            document.getElementById("id_instituicao").disabled=false;
-            document.getElementById("id_curso").disabled=false;
-            document.getElementById("id_local_de_atuacao").disabled=true;
-            document.getElementById("id_profissao").disabled=true;
-          }else{
-            document.getElementById("id_instituicao").disabled=true;
-            document.getElementById("id_curso").disabled=true;
-            document.getElementById("id_local_de_atuacao").disabled=false;
-            document.getElementById("id_profissao").disabled=false;
-          }
-
-        }
-
-
-    </script>
+	}
+</script>
 
 {% endblock %}

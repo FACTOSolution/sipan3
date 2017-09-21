@@ -1,0 +1,56 @@
+#cronograma {
+	margin-top: 50px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	padding: 10px;
+}
+
+#register {
+	margin-top: 50px;
+	background: url(../img/entrada.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	padding: 10px;
+}
+
+.titulo {
+	color: #002c30;
+	font-weight: bold;
+	font-size: 4em;
+}
+
+.cor-escura {
+	color: #212121;
+}
+
+.cor-clara {
+	color: #e2f9fb;
+}
+
+.texto-centro {
+	text-align: center;
+}
+
+.paragrafo {
+	font-weight: bold;
+	font-size: 1.7em;
+}
+
+.horario {
+	font-weight: bold;
+	font-size: 1.5em;
+}
+
+.item {
+	padding-top: 10px;
+	padding-bottom: 10px; 
+}
+
+.linha {
+	border: 1px solid #212121;
+}
+
+#arte {
+	background: url(../img/arte.svg);
+	background-size: cover;
+}

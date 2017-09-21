@@ -52,7 +52,7 @@ def home(request):
 def register(request):
 	#testado e funcionando
 	limit_sc = [110, 43, 65, 65]
-	limit_users = 250
+	limit_users = 170
 	esgoted = False
 	registereds = 0
 	for x in UserProfile.objects.all():
@@ -79,7 +79,11 @@ def register(request):
 			user.is_active = True
 			user.save()
 			assign_role(user, 'student')
-			msg = u'Para confirmar a sua inscrição clique no link \n dominio/confirm/' + str(user.confirmation_code) + "/" + str(user.id)
+			msg = u'Olá ' + user.pronome_tratamento + ' ' + user.name + ',\n\nPara confirmar a sua inscrição no III Simpósio em Alimentos\
+e Nutrição clique no link abaixo: \n\n dominio/confirm/' + str(user.confirmation_code) + "/" + str(user.id) + " \
+\n\nAtenciosamente,  \
+\nComissão Executiva do III SIPPAN.\n \
+\nPara mais informações, entre em contato conosco através do site [colocar link]."
 			send_email('Confirmação de inscrição',msg,user.email)
 			message = "Você foi cadastrado(a). Em breve receberá um email para confirmação de cadastro. Clique no link recebido para confirmar e acessar sua conta."
 			return render(request, 'site_functions/register.html', {'form': new_user, 'log':request.session, 'mns':esgoted_list, 'status': esgoted, 'msg':message})
@@ -168,12 +172,7 @@ def user_detail(request, user_id):
 		receipt_form = ReceiptForm()
 		article_form = ArticleForm()
 		scs = user.minicursos
-		if user.have_home:
-			price = 45
-		else:
-			price = 30
-		if user.minicursos.count() > 0:
-			price = price + ((user.minicursos.count() - 1) * 10)
+		price = 30
 		return render(request, 'site_functions/user_details.html', {'user': user,'articles':articles, 'log':request.session,
 			'form': receipt_form, 'formA': article_form, 'price': price, 'scs':scs})
 	else:
@@ -182,12 +181,7 @@ def user_detail(request, user_id):
 			user_retrieve = get_object_or_404(UserProfile, id=user_id)
 			receipt_form = ReceiptForm()
 			article_form = ArticleForm()
-			if user_retrieve.have_home:
-				price = 45
-			else:
-				price = 30
-			if user_retrieve.minicursos.count() > 0:
-				price = price + ((user_retrieve.minicursos.count() - 1) * 10)
+			price = 30
 			scs = user_retrieve.minicursos
 			articles_retrieve = Article.objects.all().filter(user=user_retrieve.id)
 			return render(request, 'site_functions/user_details.html', {'user': user_retrieve,
@@ -196,9 +190,9 @@ def user_detail(request, user_id):
 
 def list_students(request,page):
 	#testado e funcionando
-	global registered
-	global confirmed
-	global paid
+	registered = 0
+	confirmed = 0
+	paid = 0
 	user = get_object_or_404(UserProfile, id=request.session['member_id'])
 	if has_permission(user, 'list_all_students'):
 		for x in UserProfile.objects.all():
@@ -222,18 +216,15 @@ def list_students(request,page):
 		return redirect(home)
 
 def del_student(request,user_id):
-	global registered
-	global confirmed
-	global paid
 	user = get_object_or_404(UserProfile, id=request.session['member_id'])
 	if has_permission(user, 'list_all_students'):
 		user_d = get_object_or_404(UserProfile, id=user_id)
-		if not has_permission(user_d, 'add_new_admins'):
+		"""if not has_permission(user_d, 'add_new_admins'):
 			registered -= 1
 			if user_d.is_active:
 				confirmed -= 1
 			if user_d.had_paid:
-				paid -= 1
+				paid -= 1"""
 		user_d.delete()
 
 		return redirect(list_students,page=1)
@@ -293,7 +284,11 @@ def mark_payment(request, user_id):
 		user_p = get_object_or_404(UserProfile, id=user_id)
 		user_p.had_paid = True
 		user_p.save()
-		msg = u"Prezado (a) " + user_p.name + u" texto de confirmação de pagamento"
+		msg = u"Prezado "+ user_p.pronome_tratamento + " " + user_p.name + ", a sua inscrição \
+no III Simpósio de Pós-graduação em Alimentos e Nutrição foi confirmada. \
+\n\nAtenciosamente,  \
+\nComissão Executiva do III SIPPAN.\n \
+\nPara mais informações, entre em contato conosco através do site [colocar link]."
 		send_email('Confirmação de pagamento',msg,user_p.email)
 		return redirect(user_detail,user_id)
 
@@ -306,13 +301,26 @@ def accept_article(request, user_id, article_id):
 				user_p = get_object_or_404(UserProfile, id=user_id)
 				article_p = get_object_or_404(Article, id=article_id)
 				article_p.accepted = article_form.cleaned_data['accepted']
+				article_p.revision = article_form.cleaned_data['revision']
 				article_p.save()
+				msg = u'Prezado '+ user.pronome_tratamento + ' ' + user.name + ', informamos o parecer final da avaliação do seu trabalho \
+intitulado ' + article_p.title + '.\n\nParecer: '
 				if (article_form.cleaned_data['accepted'] == 1):
-					msg = u"Prezado (a) " + str(user.name) + u"\n TEXTO de aceite do trabalho " + str(article_p.title) + u" foi aceito. Agradecemos a participação\n" + u"Feedback: " +  str(article_form.cleaned_data['revision'])
+					msg += u'ACEITO\n'
 				elif(article_form.cleaned_data['accepted'] == 0):
-					msg = u"Prezado (a) " + str(user.name) + u"\n texto da rejeição do trabalho  "+ str(article_p.title) + u" não esteve dentro dos parâmetros requeridos pelo evento, por isso não foi aceito. Embora, agradecemos a participação\n" + u"Feedback: " +  str(article_form.cleaned_data['revision'])
+					msg += u"REJEITADO\n"
+				if article_p.revision:
+					msg += u"Comentários dos avaliadores: " + article_p.revision + "\n\n"
+				msg += "Dados do trabalho \nTítulo: " + article_p.title
+				msg += "\nÁrea: A DEFINIR"
+				msg += "\nAutores: " + article_p.autores
+
+				msg += "\n\nAtenciosamente,  \
+\nComissão Executiva do III SIPPAN.\n \
+\nPara mais informações, entre em contato conosco através do site [colocar link]."
 				send_email('Avaliação do artigo - 3º Sipan',msg,user_p.email)
-				return redirect(list_students)
+
+				return redirect(user_detail,user_id=user.id)
 		else:
 			return redirect(home)
 	else:
@@ -438,6 +446,7 @@ def upload_article(request, user_id):
 				Art.user = get_object_or_404(UserProfile, id = request.session['member_id'])
 				Art.title = request.POST['title']
 				Art.document = request.FILES['document']
+				Art.autores = request.POST['autores']
 				Art.save()
 				return redirect(user_detail,Art.user.id)
 	else:

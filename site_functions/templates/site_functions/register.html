@@ -62,51 +62,28 @@
             result += ((original.length > 9) ? original.substring(9, original.length) : '');
             f.cpf.value = result;
         }
+        
+        document.getElementById("id_local_de_atuacao").disabled=true;
+        document.getElementById("id_profissao").disabled=true;
 
-        var countChecked = 0;
-        var limiteCurso = 2;
-        var boxs_checked = document.getElementsByName("minicursos");
-        var context = {{mns}};
-        boxs_checked.forEach(
-            function(o) {
-              for (i = 0; i < context.length; i++) {
-                if (o.value == context[i][0]){
-                  document.getElementById(o.id).disabled = true;
-                }
-                  }
+        function choiceFunc(){
+          var grad = document.getElementById("id_modalidade");
 
-                });
+          if(grad.selectedIndex==0){
+            document.getElementById("id_instituicao").disabled=false;
+            document.getElementById("id_curso").disabled=false;
+            document.getElementById("id_local_de_atuacao").disabled=true;
+            document.getElementById("id_profissao").disabled=true;
+          }else{
+            document.getElementById("id_instituicao").disabled=true;
+            document.getElementById("id_curso").disabled=true;
+            document.getElementById("id_local_de_atuacao").disabled=false;
+            document.getElementById("id_profissao").disabled=false;
+          }
 
-        boxs_checked.forEach(
-            function(o) {
-                o.onclick = function() {
-                    if(o.checked == false){
-                        countChecked--;
-                    }else if (countChecked == limiteCurso) {
-                        o.checked = false;
-                        alert("Você só pode escolher até " + limiteCurso + " minicursos.");
-                    } else {
-                        countChecked++;
-                    }
-                }});
+        }
 
-                boxs_checked.forEach(
-                    function(o) {
-                        o.onclick = function() {
-                          if (o.value % 2 == 0){
-                            for (i = 0; i < boxs_checked.length; i++) {
-                              if(boxs_checked[i].value % 2 == 0 && !(boxs_checked[i].value == o.value)){
-                                document.getElementById(boxs_checked[i].id).checked = false;
-                              }
-                            }
-                          } else{
-                            for (i = 0; i < boxs_checked.length; i++) {
-                              if(boxs_checked[i].value % 2 != 0 && !(boxs_checked[i].value == o.value)){
-                                document.getElementById(boxs_checked[i].id).checked = false;
-                              }
-                            }
-                          }
-                        }});
+
     </script>
 
 {% endblock %}

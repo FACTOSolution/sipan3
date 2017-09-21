@@ -13,7 +13,7 @@
 		<div class="col-md-8" >
 			<div class="panel panel-primary">
 				<div class="panel-heading">
-					<h3 class="panel-title">{{ user.name }}</h3>
+					<h3 class="panel-title">{{ user.pronome_tratamento }} {{ user.name }}</h3>
 				</div>
 				<div class="panel-body">
 					<div class="row">
@@ -44,10 +44,14 @@
 										<td>
 										{% for art in articles.all %}
 											<h4><b><li>{{ art.title }}</li></b></h4>
-											{% if art.accepted %}
-												<h5><b>Seu artigo foi aceito</b></h5>
+											{% if not art.accepted and art.originalidade == 0 %}
+											<h5>Trabalho em análise.</h5>
 											{% else %}
-												<h5>Seu artigo ainda não foi aceito</h5>
+												{% if art.accepted %}
+													<h5><b>Seu trabalho foi aceito</b></h5>
+												{% else %}
+													<h5><b>Seu trabalho não foi aceito</b></h5>
+												{% endif %}
 											{% endif %}
 											{% if log.is_admin %}
 											<a target='_blank' href={% url 'download' path=art.document %} class="btn btn-sm btn-warning" >Download Trabalho</a>
@@ -57,11 +61,13 @@
 										{% endfor %}
 										<br>
 											{% if user.have_article %}
+												{% if not log.is_admin %}
 													<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ArticleModal">
 														Enviar Resumo
 													</button>
 													<br><h6>*Formatos aceitos: pdf</h6>
-													{% endif %}
+												{% endif %}
+											{% endif %}
 											{% if not user.have_article %}
 												Não vai enviar trabalho.
 											{% elif not articles %}
@@ -118,13 +124,13 @@
 									{% endif %}
 									<tr>
 										<td>Total A Pagar</td>
-										<td>{{price}}</td>
+										<td>R$ {{price}},00</td>
 									</tr>
 									<tr>
 										<td>Conta para depósito</td>
-										<td>Banco do Brasil<br>
-												Ag. 5602-2<br>
-												Conta corrente: 42248-7</td>
+										<td>Banco XXX<br>
+												Ag. XXXX-X<br>
+												Conta corrente: XXXXX-X</td>
 									</tr>
 									<tr>
 										<td>Dúvidas? Fale Conosco pelo noso email!</td>
@@ -139,7 +145,7 @@
 			   		{% if log.is_admin %}
 						<a href="{% url 'mark_payment' user_id=user.id %}" class="btn btn-sm btn-primary">Aceitar Recibo</a>
 			   		{% endif %}
-			   		<a target='_blank' href={% url 'download' path='articles/ModeloResumo.docx' %} class="btn btn-sm btn-warning" >Modelo de trabalho aqui</a>
+			   		<!--<a target='_blank' href={% url 'download' path='articles/ModeloResumo.docx' %} class="btn btn-sm btn-warning" >Modelo de trabalho aqui</a>-->
 			  	</div>
 		  	</div>
 		</div>
@@ -175,7 +181,7 @@
 		<div class="modal-content">
 		  <div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="myModalLabel">Enviar Artigo</h4>
+			<h4 class="modal-title" id="myModalLabel">Enviar Resumo</h4>
 		  </div>
 		  <div class="modal-body">
 			<form method="POST" enctype="multipart/form-data" class="post-form" action="{% url 'upload_article' user_id=user.id%}">

@@ -10,6 +10,11 @@ class UserForm(forms.ModelForm):
 		(0,'Nao'),
  	)
 
+	MODALIDADE_CHOICES = (
+	('EST', u'Estudante'),
+	('PRO', u'Profissional')
+,)
+
 	have_article = forms.TypedChoiceField(label='Vai submeter trabalho?',
 						 choices=choices, widget=forms.RadioSelect, coerce=int
 					)
@@ -19,19 +24,25 @@ class UserForm(forms.ModelForm):
 	#adicionei o parametro com a Classe form-control
 	password = forms.CharField(label=("Senha"), widget=forms.PasswordInput(attrs={'placeholder' : 'Digite sua senha.', 'class' : 'form-control'}))
 	#adicionei o parametro com a Classe form-control
-	name = forms.CharField(label='Nome', widget=forms.TextInput(attrs={'class' : 'form-control'}))
+	name = forms.CharField(label='Nome Completo', widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	#adicionei o parametro com a Classe form-control
 	instituicao = forms.CharField(label='Instituicao', widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	#adicionei o parametro com a Classe form-control
 	cpf = fm.BRCPFField(label='CPF', widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	#adicionei o parametro com a Classe form-control
 	phone = forms.CharField(label='Telefone', widget=forms.TextInput(attrs={'class' : 'form-control'}))
+	instituicao = forms.CharField(label='Instituição',required=False, widget=forms.TextInput(attrs={'class' : 'form-control'}))
+	local_de_atuacao = forms.CharField(label='Local de Atuação',required=False, widget=forms.TextInput(attrs={'class' : 'form-control'}))
+	profissao = forms.CharField(label='Profissão',required=False, widget=forms.TextInput(attrs={'class' : 'form-control'}))
+	curso = forms.CharField(label='Curso',required=False, widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	#adicionei essa linha de EMAIL
 	email = forms.EmailField(widget=forms.TextInput(attrs={'class' : 'form-control'}))
+	modalidade = forms.ChoiceField(label='Modalidade de Inscrição', choices=MODALIDADE_CHOICES,
+	 				widget=forms.Select(attrs={'onchange':'choiceFunc()'}))
 
 	class Meta:
 		model = UserProfile
-		fields = ('name','instituicao', 'cpf','phone','password','email','have_article')
+		fields = ('name', 'pronome_tratamento', 'cpf','email','phone','modalidade','instituicao', 'curso','profissao', 'local_de_atuacao','password','have_article')
 
 class AdminForm(forms.ModelForm):
 
@@ -49,7 +60,7 @@ class ArticleForm(forms.ModelForm):
 	title = forms.CharField(label=("Titulo do artigo"))
 	document = forms.FileField(label="Arquivo")
 	string = "Digite o nome dos autores separados por ponto e virgula em ordem de importância.\
- Até 5 (cinco) nomes: 1 autor e 4 colaboradores."
+ Até 8 (oito) autores."
 	autores = forms.CharField(label="Autores", widget=forms.Textarea( attrs={'placeholder': string}))
 
 	class Meta:
@@ -66,9 +77,24 @@ class ArticleAnalisyForm(forms.Form):
 		(1,'Sim'),
 		(0,'Nao'),
  	)
+	CHOICES_EVALLUATION = (
+		(1,'1'),
+		(2,'2'),
+		(3,'3'),
+		(4,'4'),
+		(5,'5'),
+ 	)
 
-	revision = forms.CharField(widget=forms.Textarea)
-	accepted = forms.TypedChoiceField(label='Aceito ?',
+	originalidade = forms.ChoiceField(label=u'Originalidade e relevância do trabalho', choices=CHOICES_EVALLUATION)
+	titulo = forms.ChoiceField(label=u'Clareza e objetividade do título', choices=CHOICES_EVALLUATION)
+	introducao = forms.ChoiceField(label=u'Contextualização adequada da introdução', choices=CHOICES_EVALLUATION)
+	objetivo = forms.ChoiceField(label=u'Clareza, relevância e coerência do objetivo(s)', choices=CHOICES_EVALLUATION)
+	metodologia = forms.ChoiceField(label='Metodologia adequada e coerente com objetivos', choices=CHOICES_EVALLUATION)
+	resultados = forms.ChoiceField(label='Clareza na apresentação e discussão dos resultados', choices=CHOICES_EVALLUATION)
+	conclusao = forms.ChoiceField(label='Conclusão coerente', choices=CHOICES_EVALLUATION)
+
+	revision = forms.CharField(label="Comentários (opcional)", required=False,widget=forms.Textarea)
+	accepted = forms.TypedChoiceField(label='Aceito?',
 						 choices=choices, widget=forms.RadioSelect, coerce=int
 					)
 

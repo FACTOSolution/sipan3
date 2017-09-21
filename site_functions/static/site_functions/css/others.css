@@ -54,3 +54,18 @@
 	background: url(../img/arte.svg);
 	background-size: cover;
 }
+
+#sombraclara {
+	width: 100%;
+	padding: 16px;
+	background-color: #a1bbbd;
+	color: #fff;
+	
+	text-align: center;
+	font-weight: bolder;
+	font-size: 1.5em;
+
+	box-shadow: 2px 2px 2px #d0d0d0;
+	-webkit-box-shadow: 2px 2px 2px #d0d0d0;
+	-moz-box-shadow: 2px 2px 2px #d0d0d0;
+}

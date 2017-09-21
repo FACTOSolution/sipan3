@@ -304,18 +304,23 @@ def accept_article(request, user_id, article_id):
 				article_p.revision = article_form.cleaned_data['revision']
 				article_p.save()
 				msg = u'Prezado '+ user.pronome_tratamento + ' ' + user.name + ', informamos o parecer final da avaliação do seu trabalho \
-intitulado ' + article_p.title + '.\n\nParecer:'
+intitulado ' + article_p.title + '.\n\nParecer: '
 				if (article_form.cleaned_data['accepted'] == 1):
-					msg += u'Aceito\n'
+					msg += u'ACEITO\n'
 				elif(article_form.cleaned_data['accepted'] == 0):
-					msg += u"Rejeitado\n"
+					msg += u"REJEITADO\n"
 				if article_p.revision:
 					msg += u"Comentários dos avaliadores: " + article_p.revision + "\n\n"
-				msg += "Dados do trabalho: \nTítulo: " + article_p.title
+				msg += "<b>Dados do trabalho</b> \nTítulo: " + article_p.title
 				msg += "\nÁrea: A DEFINIR"
 				msg += "\nAutores: " + article_p.autores
+
+				msg += "\n\nAtenciosamente,  \
+\nComissão Executiva do III SIPPAN.\n \
+\nPara mais informações, entre em contato conosco através do site [colocar link]."
 				send_email('Avaliação do artigo - 3º Sipan',msg,user_p.email)
-				return redirect(user_detail,user.id)
+
+				return redirect(user_detail,user_id=user.id)
 		else:
 			return redirect(home)
 	else:

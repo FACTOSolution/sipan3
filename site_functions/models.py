@@ -96,7 +96,7 @@ class Article (models.Model):
 	)
 
 	#criterios de avaliação
-	originalidade = models.PositiveSmallIntegerField(default=1)
+	originalidade = models.PositiveSmallIntegerField(default=0)
 	titulo = models.PositiveSmallIntegerField(default=1)
 	introducao = models.PositiveSmallIntegerField(default=1)
 	objetivo = models.PositiveSmallIntegerField(default=1)

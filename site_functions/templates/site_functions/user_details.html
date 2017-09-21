@@ -44,10 +44,14 @@
 										<td>
 										{% for art in articles.all %}
 											<h4><b><li>{{ art.title }}</li></b></h4>
-											{% if art.accepted %}
-												<h5><b>Seu artigo foi aceito</b></h5>
+											{% if not art.accepted and art.originalidade == 0 %}
+											<h5>Trabalho em análise.</h5>
 											{% else %}
-												<h5>Seu artigo ainda não foi aceito</h5>
+												{% if art.accepted %}
+													<h5><b>Seu trabalho foi aceito</b></h5>
+												{% else %}
+													<h5><b>Seu trabalho não foi aceito</b></h5>
+												{% endif %}
 											{% endif %}
 											{% if log.is_admin %}
 											<a target='_blank' href={% url 'download' path=art.document %} class="btn btn-sm btn-warning" >Download Trabalho</a>

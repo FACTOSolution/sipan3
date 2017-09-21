@@ -24,7 +24,7 @@
 					<form method="POST" enctype="multipart/form-data" class="post-form" name='f'>
 					{% csrf_token %}
 					{% if msg %}
-						<div class='alert alert-info'>{{msg}}</div>
+						<div class='sombraclara'>{{msg}}</div>
 					{% endif %}
 						<div class="form-group">{{ form|bootstrap }}</div>
 						<button type="submit" class="save btn btn-primary">Submeter inscrição</button>
@@ -46,7 +46,7 @@
 				<div class="col-sm-2"></div>
 			</div>
 		{% else %}
-			<div class='alert alert-info'>Mensagem de vagas esgotadas.</div>
+			<div id="sombraclara">Mensagem de vagas esgotadas.</div>
 		{% endif %}
 	</div>
 </section>

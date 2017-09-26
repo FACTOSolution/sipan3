@@ -1,12 +1,18 @@
+@font-face {
+	font-family: Offside;
+	src: url(../fonts/Offside/Offside-Regular.ttf);
+}
+
 #apresentacao {
-	background: url(../img/back-apresentacao.jpg);
-	background-size:100% 100%;
-	background-repeat: no-repeat;
 	margin-top: 50px;
-  min-height: 700px;
+}
+
+#back-apresentacao {
+	width: 100%;
 }
 
 #sobre {
+	font-family: 'Roboto Slab', serif;
 	margin-top: -5px;
 	background: url(../img/back-sobre.svg);
 	background-size: cover;
@@ -14,6 +20,7 @@
 }
 
 #local {
+	margin-top: -5px;
 	background: #001719;
 }
 
@@ -23,6 +30,7 @@
 }
 
 #data-evento {
+	font-family: 'helvetica';
 	text-align: center;
 	font-size: 1.4em;
 	color: #e2f9fb;
@@ -35,16 +43,17 @@
 .section_title {
 	text-align: center;
 	padding: 10px;
-  color: #151818;
-  font-size: 3.0em;
-  font-family: 'Roboto Slab', serif;
+	color: #151818;
+	font-size: 3.5em;
+	font-weight: bold;
+	font-family: Offside;
 }
 
 .about {
 	text-align: justify;
-  font-family: 'helvetica';
-  color: #151818;
-  font-size: 1.5em;
+	font-family: 'helvetica';
+	color: #151818;
+	font-size: 1.5em;
 }
 
 .realizacao {
@@ -53,14 +62,4 @@
 
 .prex {
 	max-height: 180px; 	
-}
-
-@media screen and (max-width: 768px) {
-  #apresentacao {
-  	background: url(../img/back-apresentacao-small.jpg);
-  	background-size:100% 100%;
-		background-repeat: no-repeat;
-		margin-top: 50px;
-    min-height: 700px;
-  }
 }

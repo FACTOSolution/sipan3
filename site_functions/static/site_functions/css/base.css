@@ -1,3 +1,8 @@
+@font-face {
+  font-family: Offside;
+  src: url(../fonts/Offside/Offside-Regular.ttf);
+}
+
 #barra-navegacao {
   background: #212121;
 }
@@ -8,6 +13,8 @@
 }
 
 #lista-navegacao {
+  font-family: Offside;
+  font-weight: bold;
   font-size: 1.2em;
   color: #f2fefd;
 }

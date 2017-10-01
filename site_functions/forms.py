@@ -5,19 +5,11 @@ from localflavor.br import forms as fm
 
 
 class UserForm(forms.ModelForm):
-	choices = (
-		(1,'Sim'),
-		(0,'Nao'),
- 	)
-
 	MODALIDADE_CHOICES = (
 	('EST', u'Estudante'),
 	('PRO', u'Profissional')
 ,)
 
-	have_article = forms.TypedChoiceField(label='Vai submeter trabalho?',
-						 choices=choices, widget=forms.RadioSelect, coerce=int
-					)
 	## MUDANÇAS FEITAS POR MIM(KÁSSIO)##
 		#atribui as classes para cada campo do formulário
 		#assim todos os campos estão estilizados com o tema do bootstrap
@@ -42,7 +34,7 @@ class UserForm(forms.ModelForm):
 
 	class Meta:
 		model = UserProfile
-		fields = ('name', 'pronome_tratamento', 'cpf','email','phone','modalidade','instituicao', 'curso','profissao', 'local_de_atuacao','password','have_article')
+		fields = ('name', 'pronome_tratamento', 'cpf','email','phone','modalidade','instituicao', 'curso','profissao', 'local_de_atuacao','password')
 
 class AdminForm(forms.ModelForm):
 

@@ -169,24 +169,16 @@ def user_detail(request, user_id):
 		user = get_object_or_404(UserProfile, id = request.session['member_id'])
 		print(user.comprovante)
 		articles = Article.objects.all().filter(user=user.id)
-		receipt_form = ReceiptForm()
-		article_form = ArticleForm()
-		scs = user.minicursos
-		price = 30
-		return render(request, 'site_functions/user_details.html', {'user': user,'articles':articles, 'log':request.session,
-			'form': receipt_form, 'formA': article_form, 'price': price, 'scs':scs})
+		return render(request, 'site_functions/user_details.html', {'user': user, 'log':request.session})
 	else:
 		user = get_object_or_404(UserProfile, id = request.session['member_id'])
 		if has_permission(user,'retrieve_any_student'):
 			user_retrieve = get_object_or_404(UserProfile, id=user_id)
 			receipt_form = ReceiptForm()
 			article_form = ArticleForm()
-			price = 30
 			scs = user_retrieve.minicursos
 			articles_retrieve = Article.objects.all().filter(user=user_retrieve.id)
-			return render(request, 'site_functions/user_details.html', {'user': user_retrieve,
-					'articles':articles_retrieve, 'log':request.session, 'form': receipt_form,
-					'formA': article_form,'price': price, 'scs':scs})
+			return render(request, 'site_functions/user_details.html', {'user': user_retrieve, 'log':request.session})
 
 def list_students(request,page):
 	#testado e funcionando
@@ -277,7 +269,7 @@ def list_talks(request):
 					'log': request.session, 'talk_form': talk_form})
 	else:
 		return redirect(home)
-
+"""
 def mark_payment(request, user_id):
 	user = get_object_or_404(UserProfile, id=request.session['member_id'])
 	if has_permission(user, 'mark_payment'):
@@ -328,7 +320,7 @@ intitulado ' + article_p.title + '.\n\nParecer: '
 		return render(request, 'site_functions/article_revision.html', {'form': article_form,
 					'log': request.session})
 
-"""
+
 def register_short_course(request):
 	if request.method == 'POST':
 		new_short_course = ShortCourseForm(request.POST, request.FILES)
@@ -422,7 +414,7 @@ def register_talk(request):
 			return render(request, 'site_functions/register_talk.html', {'form': new_talk_form, 'log':request.session})
 		else:
 			return redirect(home)
-
+"""
 def upload_receipt(request, user_id):
 	if request.method == 'POST':
 		if int(user_id) == int(request.session['member_id']):
@@ -452,7 +444,7 @@ def upload_article(request, user_id):
 	else:
 		article_form = ArticleForm()
 	return	render(request, 'site_functions/upload_article.html', {'form': article_form, 'log': request.session})
-
+"""
 def send_email(subject, message, to_email):
 	if subject and message and to_email:
 		try:

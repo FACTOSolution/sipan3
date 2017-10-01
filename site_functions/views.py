@@ -51,7 +51,6 @@ def home(request):
 
 def register(request):
 	#testado e funcionando
-	limit_sc = [110, 43, 65, 65]
 	limit_users = 170
 	esgoted = False
 	registereds = 0
@@ -59,15 +58,6 @@ def register(request):
 		if not has_permission(x, 'add_new_admins'):
 			registereds += 1
 	mns = Minicurso.objects.all()
-	mns_list = []
-	for x in mns:
-		mns_list.append([x.id, UserProfile.objects.all().filter(minicursos=x.id).count()])
-	esgoted_list = []
-	i = 0
-	for x in mns_list:
-		if x[1] >= limit_sc[i]:
-			esgoted_list.append(x)
-		i += 1
 	if registereds >=limit_users: esgoted = True
 	message = False
 	if request.method == "POST":
@@ -86,10 +76,10 @@ e Nutrição clique no link abaixo: \n\n dominio/confirm/' + str(user.confirmati
 \nPara mais informações, entre em contato conosco através do site [colocar link]."
 			send_email('Confirmação de inscrição',msg,user.email)
 			message = "Você foi cadastrado(a). Em breve receberá um email para confirmação de cadastro. Clique no link recebido para confirmar e acessar sua conta."
-			return render(request, 'site_functions/register.html', {'form': new_user, 'log':request.session, 'mns':esgoted_list, 'status': esgoted, 'msg':message})
+			return render(request, 'site_functions/register.html', {'form': new_user, 'log':request.session, 'status': esgoted, 'msg':message})
 	else:
 		new_user = UserForm()
-	return render(request, 'site_functions/register.html', {'form': new_user, 'log':request.session, 'mns':esgoted_list, 'status': esgoted, 'msg':message})
+	return render(request, 'site_functions/register.html', {'form': new_user, 'log':request.session,  'status': esgoted, 'msg':message})
 
 def confirm(request, confirmation_code, user_id):
 	try:

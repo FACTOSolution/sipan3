@@ -25,10 +25,10 @@ paid = 0
 def pdf_gen(request):
 	actual_user = get_object_or_404(UserProfile, id = request.session['member_id'])
 	if has_permission(actual_user,'retrieve_any_student'):
-		allS = UserProfile.objects.all()
+		allS = UserProfile.objects.filter(groups__name='student')
 		students = []
 		for i in allS:
-			if i.had_paid:
+			if i.is_active:
 				students.append(i)
 
 		html_string = render_to_string('site_functions/pdf_template.html', {'stds': students})

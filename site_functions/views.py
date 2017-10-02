@@ -69,10 +69,9 @@ def register(request):
 			user.is_active = True
 			user.save()
 			assign_role(user, 'student')
-			msg = u'Olá ' + user.pronome_tratamento + ' ' + user.name + ',\n\nPara confirmar a sua inscrição no III Simpósio em Alimentos\
-e Nutrição clique no link abaixo: \n\n dominio/confirm/' + str(user.confirmation_code) + "/" + str(user.id) + " \
+			msg = u'Prezado ' + user.pronome_tratamento + ' ' + user.name + ',\n\nPara confirmar a sua inscrição no V Seminário do Programa de Pós-graduação em Alimentos e Nutrição clique no link abaixo: \n\n dominio/confirm/' + str(user.confirmation_code) + "/" + str(user.id) + " \
 \n\nAtenciosamente,  \
-\nComissão Executiva do III SIPPAN.\n \
+\nComissão Executiva do V SEMPGAN.\n \
 \nPara mais informações, entre em contato conosco através do site [colocar link]."
 			send_email('Confirmação de inscrição',msg,user.email)
 			message = "Você foi cadastrado(a). Em breve receberá um email para confirmação de cadastro. Clique no link recebido para confirmar e acessar sua conta."
@@ -102,7 +101,7 @@ def admin_register(request):
 			user.password = hs.make_password(request.POST.get('password', False))
 			user.confirmation_code = get_random_string(length=16)
 			user.save()
-			msg = u'Para confirmar a sua inscrição clique no link \n dominio/confirm/' + str(user.confirmation_code) + "/" + str(user.id)
+			msg = u'Para confirmar a seu cadastro clique no link \n dominio/confirm/' + str(user.confirmation_code) + "/" + str(user.id)
 			send_email('Confirmação de inscrição',msg,user.email)
 			assign_role(user, 'admin')
 			return redirect(list_admins)

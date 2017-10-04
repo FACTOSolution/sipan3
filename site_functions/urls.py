@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^user_details/(?P<user_id>[0-9]+)$', views.user_detail, name='user_detail'),
     url(r'^schedule/$', views.schedule, name='schedule'),
     url(r'^pdf_gen/$', views.pdf_gen, name='pdf_gen'),
+    url(r'^lista_presenca/$', views.lista_presenca, name='lista_presenca'),
     #url(r'^upload_receipt/(?P<user_id>[0-9]+)$', views.upload_receipt, name='upload_receipt'),
     #url(r'^upload_article/(?P<user_id>[0-9]+)$', views.upload_article, name='upload_article'),
     url(r'^login/$', views.user_login, name='user_login'),

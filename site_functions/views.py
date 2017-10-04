@@ -43,6 +43,27 @@ def pdf_gen(request):
 	else:
 		raise Http404
 
+def lista_presenca(request):
+	actual_user = get_object_or_404(UserProfile, id = request.session['member_id'])
+	if has_permission(actual_user,'retrieve_any_student'):
+		allS = UserProfile.objects.filter(groups__name='student')
+		students = []
+		for i in allS:
+			if i.is_active:
+				students.append(i)
+		students.sort(key=lambda x: x.name, reverse=False)
+		html_string = render_to_string('site_functions/lista_presenca.html', {'stds': students})
+		html = HTML(string=html_string)
+		html.write_pdf(target='/tmp/lista_presenca_sempgan5.pdf')
+		fs = FileSystemStorage('/tmp')
+		with fs.open('lista_presenca_sempgan5.pdf') as pdf:
+			response = HttpResponse(pdf, content_type='application/pdf')
+			response['Content-Disposition'] = 'attachment; filename="lista_presenca_sempgan5.pdf"'
+			return response
+		return response
+	else:
+		raise Http404
+
 def home(request):
 	#testado e funcionando
 	#scs = Minicurso.objects.all()

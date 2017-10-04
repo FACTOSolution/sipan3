@@ -23,16 +23,16 @@
 				<div class="col-sm-6">
 					<form method="POST" enctype="multipart/form-data" class="post-form" name='f'>
 					{% csrf_token %}
-					{% if msg %}
-						<div class='sombraclara'>{{msg}}</div>
-					{% endif %}
 						<div class="form-group">{{ form|bootstrap }}</div>
 						<button type="submit" class="save btn btn-primary">Submeter inscrição</button>
 					</form>
 				</div>
 				<div class="col-sm-6">
+					{% if msg %}
+						<div id='sombraclara'>{{msg}}</div>
+					{% endif %}
 					<br>
-					<div id="sombraclara">A inscrição custa R$ 30,00.</div>
+					<div id="sombraclara">A inscrição é gratuita.</div>
 				</div>
 			</div>
 
@@ -41,12 +41,13 @@
 			<div class="row">
 				<div class="col-sm-2"></div>
 				<div class="col-sm-8">
-					
+
 				</div>
 				<div class="col-sm-2"></div>
 			</div>
 		{% else %}
-			<div id="sombraclara">Mensagem de vagas esgotadas.</div>
+			<div id="sombraclara">Vagas esgotadas. Até o próximo SEMPGAN.</div>
+			<br>
 		{% endif %}
 	</div>
 </section>
@@ -64,7 +65,7 @@
 			result += ((original.length > 9) ? original.substring(9, original.length) : '');
 			f.cpf.value = result;
 	}
-	
+
 	document.getElementById("id_local_de_atuacao").disabled=true;
 	document.getElementById("id_profissao").disabled=true;
 

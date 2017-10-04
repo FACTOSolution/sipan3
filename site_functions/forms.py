@@ -5,19 +5,11 @@ from localflavor.br import forms as fm
 
 
 class UserForm(forms.ModelForm):
-	choices = (
-		(1,'Sim'),
-		(0,'Nao'),
- 	)
-
 	MODALIDADE_CHOICES = (
 	('EST', u'Estudante'),
 	('PRO', u'Profissional')
 ,)
 
-	have_article = forms.TypedChoiceField(label='Vai submeter trabalho?',
-						 choices=choices, widget=forms.RadioSelect, coerce=int
-					)
 	## MUDANÇAS FEITAS POR MIM(KÁSSIO)##
 		#atribui as classes para cada campo do formulário
 		#assim todos os campos estão estilizados com o tema do bootstrap
@@ -26,12 +18,12 @@ class UserForm(forms.ModelForm):
 	#adicionei o parametro com a Classe form-control
 	name = forms.CharField(label='Nome Completo', widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	#adicionei o parametro com a Classe form-control
-	instituicao = forms.CharField(label='Instituicao', widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	#adicionei o parametro com a Classe form-control
 	cpf = fm.BRCPFField(label='CPF', widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	#adicionei o parametro com a Classe form-control
 	phone = forms.CharField(label='Telefone', widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	instituicao = forms.CharField(label='Instituição',required=False, widget=forms.TextInput(attrs={'class' : 'form-control'}))
+	#pronome_tratamento = forms.CharField(label='Pronome de tratamento', widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	local_de_atuacao = forms.CharField(label='Local de Atuação',required=False, widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	profissao = forms.CharField(label='Profissão',required=False, widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	curso = forms.CharField(label='Curso',required=False, widget=forms.TextInput(attrs={'class' : 'form-control'}))
@@ -42,7 +34,7 @@ class UserForm(forms.ModelForm):
 
 	class Meta:
 		model = UserProfile
-		fields = ('name', 'pronome_tratamento', 'cpf','email','phone','modalidade','instituicao', 'curso','profissao', 'local_de_atuacao','password','have_article')
+		fields = ('name', 'pronome_tratamento', 'cpf','email','phone','modalidade','instituicao', 'curso','profissao', 'local_de_atuacao','password')
 
 class AdminForm(forms.ModelForm):
 

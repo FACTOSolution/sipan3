@@ -24,11 +24,11 @@
 							<table class="table table-user-information">
 								<tbody>
 									<tr>
-										<td>Email:</td>
+										<td>Email</td>
 										<td>{{ user.email }}</td>
 									</tr>
 									<tr>
-										<td>Instituição:</td>
+										<td>Instituição</td>
 										<td>{{ user.instituicao }}</td>
 									</tr>
 									<tr>
@@ -39,143 +39,24 @@
 										<td>Telefone</td>
 										<td>{{ user.phone }}</td>
 									</tr>
-									<tr>
-										<td>Artigo</td>
-										<td>
-										{% for art in articles.all %}
-											<h4><b><li>{{ art.title }}</li></b></h4>
-											{% if not art.accepted and art.originalidade == 0 %}
-											<h5>Trabalho em análise.</h5>
-											{% else %}
-												{% if art.accepted %}
-													<h5><b>Seu trabalho foi aceito</b></h5>
-												{% else %}
-													<h5><b>Seu trabalho não foi aceito</b></h5>
-												{% endif %}
-											{% endif %}
-											{% if log.is_admin %}
-											<a target='_blank' href={% url 'download' path=art.document %} class="btn btn-sm btn-warning" >Download Trabalho</a>
-											<a href={% url 'accept_article' user_id=user.id article_id=art.id %} class="btn btn-sm btn-primary">Avaliar Trabalho</a>
-											{% endif %}
-											<br>
-										{% endfor %}
-										<br>
-											{% if user.have_article %}
-												{% if not log.is_admin %}
-													<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ArticleModal">
-														Enviar Resumo
-													</button>
-													<br><h6>*Formatos aceitos: pdf</h6>
-												{% endif %}
-											{% endif %}
-											{% if not user.have_article %}
-												Não vai enviar trabalho.
-											{% elif not articles %}
-												{% if log.is_admin %}
-												Resumo ainda não enviado
-												{% endif %}
-											{% endif %}
-
-
-
-										</td>
-									</tr>
-									<tr>
-										<td>Comprovante de depósito bancário</td>
-										<td>
-											{% if user.comprovante != "False" %}
-												<ol><a target='_blank' href={% url 'download' path=user.comprovante %} class="btn btn-sm btn-warning">Download Recibo</a></ol>
-											{% else%}
-												{% if log.is_admin%}
-													<p>Ainda não enviou comprovante</p>
-												{% endif %}
-											{% endif %}
-											{% if not log.is_admin %}
-												{% if user.comprovante == "False" %}
-													<button type="button" class="btn btn-default" data-toggle="modal" data-target="#ReceiptModal">
-													Enviar Comprovante
-													</button>
-													<br><h6>*Formatos aceitos: imagens</h6>
-												{% endif %}
-											{% endif %}
-										</td>
-									</tr>
-									<tr>
-										<td>Status Da Inscrição</td>
-										<td>
-										{% if log.is_admin %}
-											<p>Administrador</p>
-										{% else %}
-											{% if user.had_paid %}
-												Participação Confirmada!
-											{% else %}
-												Pagamento Pendente. Estamos analisando seu depósito.
-											{% endif %}
-										{% endif %}
-										</td>
-									</tr>
-									{% if user.have_article %}
-										<tr>
-											<td>Avaliação do artigo</td>
-											{% for art in articles.all %}
-
-											{% endfor %}
-										</tr>
-									{% endif %}
-									<tr>
-										<td>Total A Pagar</td>
-										<td>R$ {{price}},00</td>
-									</tr>
-									<tr>
-										<td>Conta para depósito</td>
-										<td>Banco XXX<br>
-												Ag. XXXX-X<br>
-												Conta corrente: XXXXX-X</td>
-									</tr>
-									<tr>
-										<td>Dúvidas? Fale Conosco pelo noso email!</td>
-										<td>contato</td>
-									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
 			 	<div class="panel-footer">
-			   		{% if log.is_admin %}
-						<a href="{% url 'mark_payment' user_id=user.id %}" class="btn btn-sm btn-primary">Aceitar Recibo</a>
+			   	<!--	{% if log.is_admin %}
+
 			   		{% endif %}
-			   		<!--<a target='_blank' href={% url 'download' path='articles/ModeloResumo.docx' %} class="btn btn-sm btn-warning" >Modelo de trabalho aqui</a>-->
+			   		<a target='_blank' href={% url 'download' path='articles/ModeloResumo.docx' %} class="btn btn-sm btn-warning" >Modelo de trabalho aqui</a>
+						-->
 			  	</div>
 		  	</div>
 		</div>
 		<div class="col-md-2"></div>
 	</div>
 </div>
-
-	<!-- Modal Do Comprovante -->
-	<div class="modal fade" id="ReceiptModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	  <div class="modal-dialog" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="myModalLabel">Enviar Comprovante</h4>
-		  </div>
-		  <div class="modal-body">
-			<form method="POST" enctype="multipart/form-data" class="post-form" action="{% url 'upload_receipt' user_id=user.id%}">
-			{% csrf_token %}
-				{{form.as_p}}
-			<button type="submit" class="save btn btn-default">Salvar</button>
-			</form>
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
-
-	<!-- Modal Do Artigo -->
+<!--
 	<div class="modal fade" id="ArticleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -184,10 +65,8 @@
 			<h4 class="modal-title" id="myModalLabel">Enviar Resumo</h4>
 		  </div>
 		  <div class="modal-body">
-			<form method="POST" enctype="multipart/form-data" class="post-form" action="{% url 'upload_article' user_id=user.id%}">
-			{% csrf_token %}
-				{{formA|bootstrap}}
-			<button type="submit" class="save btn btn-default">Salvar</button>
+
+
 			</form>
 		  </div>
 		  <div class="modal-footer">
@@ -195,5 +74,5 @@
 		  </div>
 		</div>
 	  </div>
-	</div>
+	</div>-->
 {% endblock %}

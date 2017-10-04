@@ -1,0 +1,51 @@
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Table Style</title>
+	<meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; width=device-width;">
+  <style>
+  .text-right{
+    min-width: 100px;
+    padding: 20px;
+  }
+
+  .text-left{
+    padding: 20px;
+  }
+
+
+  table, th, tr, td{
+    border: 1px solid black;
+    border-collapse: collapse;
+
+  }
+
+  td{
+     text-transform: uppercase;
+  }
+  </style>
+</head>
+
+<body>
+<div class="table-title">
+<h3>Data Table</h3>
+</div>
+    <table class="table-fill" border="1px solid">
+      <thead>
+        <tr>
+          <th class="text-left">Nome</th>
+          <th class="text-right">Assinatura</th>
+        </tr>
+      </thead>
+        <tbody class="table-hover">
+          {% for std in stds %}
+            <tr>
+              <td class="text-left">{{std.name}}</td>
+              <td class="text-right"></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+  </body>

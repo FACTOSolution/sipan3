@@ -30,33 +30,33 @@
               <div class="col-md-12">
                   <div class="card">
                       <div class="header">
-                          <h4 class="title">Lista De Inscritos (Total de Inscritos: {{max}}) (Inscrições Confirmadas: {{ok}})  (Pagas: {{paid}})</h4>
+                          <h4 class="title">Lista De Inscritos (Total de Inscritos: {{max}}) (Inscrições Confirmadas: {{ok}})</h4>
                       </div>
                       <div class="content table-responsive table-full-width">
                           <table class="table table-hover table-striped">
                             <thead class="thead" >
                               <tr>
                                 <th>Nome</th>
-                                <th>Status do comprovante</th>
+                                <th>Status da Inscrição</th>
                                 <th>Deletar</th>
                               </tr>
                             </thead>
                             <tbody>
                               {% for u in users %}
-                              {% if not u.had_paid  %}
+                              {% if not u.is_active  %}
                               <tr style="background-color: #FFEC84">
                                 <td><a href="{% url 'user_detail' user_id=u.id%}">{{ u.name }}</a></td>
-                                <td>Análise</td>
+                                <td>Não confirmada</td>
                                 <td><a href="{% url 'del_user' user_id=u.id %}">Deletar</a></td>
                               </tr>
                               {% endif %}
                               {% endfor %}
 
                               {% for u in users %}
-                              {% if u.had_paid  %}
+                              {% if u.is_active  %}
                               <tr style="background-color: #90FF4D;">
                                 <td><a href="{% url 'user_detail' user_id=u.id%}">{{ u.name }}</a></td>
-                                <td>Aprovado</td>
+                                <td>Confirmada</td>
                                 <td><a href="{% url 'del_user' user_id=u.id %}">Deletar</a></td>
                               </tr>
                               {% endif %}

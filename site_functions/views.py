@@ -25,19 +25,40 @@ paid = 0
 def pdf_gen(request):
 	actual_user = get_object_or_404(UserProfile, id = request.session['member_id'])
 	if has_permission(actual_user,'retrieve_any_student'):
-		allS = UserProfile.objects.all()
+		allS = UserProfile.objects.filter(groups__name='student')
 		students = []
 		for i in allS:
-			if i.had_paid:
+			if i.is_active:
 				students.append(i)
 
 		html_string = render_to_string('site_functions/pdf_template.html', {'stds': students})
 		html = HTML(string=html_string)
-		html.write_pdf(target='/tmp/participantes_sipan3.pdf')
+		html.write_pdf(target='/tmp/participantes_sempgan5.pdf')
 		fs = FileSystemStorage('/tmp')
-		with fs.open('participantes_sipan3.pdf') as pdf:
+		with fs.open('participantes_sempgan5.pdf') as pdf:
 			response = HttpResponse(pdf, content_type='application/pdf')
-			response['Content-Disposition'] = 'attachment; filename="participantes_sipan3.pdf"'
+			response['Content-Disposition'] = 'attachment; filename="participantes_sempgan5.pdf"'
+			return response
+		return response
+	else:
+		raise Http404
+
+def lista_presenca(request):
+	actual_user = get_object_or_404(UserProfile, id = request.session['member_id'])
+	if has_permission(actual_user,'retrieve_any_student'):
+		allS = UserProfile.objects.filter(groups__name='student')
+		students = []
+		for i in allS:
+			if i.is_active:
+				students.append(i)
+		students.sort(key=lambda x: x.name, reverse=False)
+		html_string = render_to_string('site_functions/lista_presenca.html', {'stds': students})
+		html = HTML(string=html_string)
+		html.write_pdf(target='/tmp/lista_presenca_sempgan5.pdf')
+		fs = FileSystemStorage('/tmp')
+		with fs.open('lista_presenca_sempgan5.pdf') as pdf:
+			response = HttpResponse(pdf, content_type='application/pdf')
+			response['Content-Disposition'] = 'attachment; filename="lista_presenca_sempgan5.pdf"'
 			return response
 		return response
 	else:
@@ -51,7 +72,6 @@ def home(request):
 
 def register(request):
 	#testado e funcionando
-	limit_sc = [110, 43, 65, 65]
 	limit_users = 170
 	esgoted = False
 	registereds = 0
@@ -59,15 +79,6 @@ def register(request):
 		if not has_permission(x, 'add_new_admins'):
 			registereds += 1
 	mns = Minicurso.objects.all()
-	mns_list = []
-	for x in mns:
-		mns_list.append([x.id, UserProfile.objects.all().filter(minicursos=x.id).count()])
-	esgoted_list = []
-	i = 0
-	for x in mns_list:
-		if x[1] >= limit_sc[i]:
-			esgoted_list.append(x)
-		i += 1
 	if registereds >=limit_users: esgoted = True
 	message = False
 	if request.method == "POST":
@@ -79,17 +90,16 @@ def register(request):
 			user.is_active = True
 			user.save()
 			assign_role(user, 'student')
-			msg = u'Olá ' + user.pronome_tratamento + ' ' + user.name + ',\n\nPara confirmar a sua inscrição no III Simpósio em Alimentos\
-e Nutrição clique no link abaixo: \n\n dominio/confirm/' + str(user.confirmation_code) + "/" + str(user.id) + " \
+			msg = u'Prezado ' + user.pronome_tratamento + ' ' + user.name + ',\n\nPara confirmar a sua inscrição no V Seminário do Programa de Pós-graduação em Alimentos e Nutrição clique no link abaixo: \n\n dominio/confirm/' + str(user.confirmation_code) + "/" + str(user.id) + " \
 \n\nAtenciosamente,  \
-\nComissão Executiva do III SIPPAN.\n \
+\nComissão Executiva do V SEMPGAN.\n \
 \nPara mais informações, entre em contato conosco através do site [colocar link]."
 			send_email('Confirmação de inscrição',msg,user.email)
 			message = "Você foi cadastrado(a). Em breve receberá um email para confirmação de cadastro. Clique no link recebido para confirmar e acessar sua conta."
-			return render(request, 'site_functions/register.html', {'form': new_user, 'log':request.session, 'mns':esgoted_list, 'status': esgoted, 'msg':message})
+			return render(request, 'site_functions/register.html', {'form': new_user, 'log':request.session, 'status': esgoted, 'msg':message})
 	else:
 		new_user = UserForm()
-	return render(request, 'site_functions/register.html', {'form': new_user, 'log':request.session, 'mns':esgoted_list, 'status': esgoted, 'msg':message})
+	return render(request, 'site_functions/register.html', {'form': new_user, 'log':request.session,  'status': esgoted, 'msg':message})
 
 def confirm(request, confirmation_code, user_id):
 	try:
@@ -112,7 +122,7 @@ def admin_register(request):
 			user.password = hs.make_password(request.POST.get('password', False))
 			user.confirmation_code = get_random_string(length=16)
 			user.save()
-			msg = u'Para confirmar a sua inscrição clique no link \n dominio/confirm/' + str(user.confirmation_code) + "/" + str(user.id)
+			msg = u'Para confirmar a seu cadastro clique no link \n dominio/confirm/' + str(user.confirmation_code) + "/" + str(user.id)
 			send_email('Confirmação de inscrição',msg,user.email)
 			assign_role(user, 'admin')
 			return redirect(list_admins)
@@ -169,30 +179,21 @@ def user_detail(request, user_id):
 		user = get_object_or_404(UserProfile, id = request.session['member_id'])
 		print(user.comprovante)
 		articles = Article.objects.all().filter(user=user.id)
-		receipt_form = ReceiptForm()
-		article_form = ArticleForm()
-		scs = user.minicursos
-		price = 30
-		return render(request, 'site_functions/user_details.html', {'user': user,'articles':articles, 'log':request.session,
-			'form': receipt_form, 'formA': article_form, 'price': price, 'scs':scs})
+		return render(request, 'site_functions/user_details.html', {'user': user, 'log':request.session})
 	else:
 		user = get_object_or_404(UserProfile, id = request.session['member_id'])
 		if has_permission(user,'retrieve_any_student'):
 			user_retrieve = get_object_or_404(UserProfile, id=user_id)
 			receipt_form = ReceiptForm()
 			article_form = ArticleForm()
-			price = 30
 			scs = user_retrieve.minicursos
 			articles_retrieve = Article.objects.all().filter(user=user_retrieve.id)
-			return render(request, 'site_functions/user_details.html', {'user': user_retrieve,
-					'articles':articles_retrieve, 'log':request.session, 'form': receipt_form,
-					'formA': article_form,'price': price, 'scs':scs})
+			return render(request, 'site_functions/user_details.html', {'user': user_retrieve, 'log':request.session})
 
 def list_students(request,page):
 	#testado e funcionando
 	registered = 0
 	confirmed = 0
-	paid = 0
 	user = get_object_or_404(UserProfile, id=request.session['member_id'])
 	if has_permission(user, 'list_all_students'):
 		for x in UserProfile.objects.all():
@@ -200,8 +201,6 @@ def list_students(request,page):
 				registered += 1
 				if x.is_active:
 					confirmed += 1
-				if x.had_paid:
-					paid += 1
 		Users = UserProfile.objects.filter(groups__name='student')
 		paginator = Paginator(Users,10)
 		try:
@@ -211,7 +210,7 @@ def list_students(request,page):
 		except:
 			users = paginator.page(paginator.num_pages)
 		return render(request, 'site_functions/inscritos.html', {'users': users,
-					'log': request.session, 'max':registered, 'ok':confirmed, 'paid': paid})
+					'log': request.session, 'max':registered, 'ok':confirmed})
 	else:
 		return redirect(home)
 
@@ -277,7 +276,7 @@ def list_talks(request):
 					'log': request.session, 'talk_form': talk_form})
 	else:
 		return redirect(home)
-
+"""
 def mark_payment(request, user_id):
 	user = get_object_or_404(UserProfile, id=request.session['member_id'])
 	if has_permission(user, 'mark_payment'):
@@ -328,7 +327,7 @@ intitulado ' + article_p.title + '.\n\nParecer: '
 		return render(request, 'site_functions/article_revision.html', {'form': article_form,
 					'log': request.session})
 
-"""
+
 def register_short_course(request):
 	if request.method == 'POST':
 		new_short_course = ShortCourseForm(request.POST, request.FILES)
@@ -422,7 +421,7 @@ def register_talk(request):
 			return render(request, 'site_functions/register_talk.html', {'form': new_talk_form, 'log':request.session})
 		else:
 			return redirect(home)
-
+"""
 def upload_receipt(request, user_id):
 	if request.method == 'POST':
 		if int(user_id) == int(request.session['member_id']):
@@ -452,7 +451,7 @@ def upload_article(request, user_id):
 	else:
 		article_form = ArticleForm()
 	return	render(request, 'site_functions/upload_article.html', {'form': article_form, 'log': request.session})
-
+"""
 def send_email(subject, message, to_email):
 	if subject and message and to_email:
 		try:

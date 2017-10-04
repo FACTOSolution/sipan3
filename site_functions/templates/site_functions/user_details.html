@@ -28,23 +28,39 @@
 										<td>{{ user.email }}</td>
 									</tr>
 									<tr>
-										<td>Instituição</td>
-										<td>{{ user.instituicao }}</td>
+										<td>Telefone</td>
+										<td>{{ user.phone }}</td>
 									</tr>
 									<tr>
 										<td>CPF</td>
 										<td>{{ user.cpf}}</td>
 									</tr>
-									<tr>
-										<td>Telefone</td>
-										<td>{{ user.phone }}</td>
-									</tr>
+									{% if user.instituicao %}
+										<tr>
+											<td>Instituição</td>
+											<td>{{ user.instituicao}}</td>
+										</tr>
+										<tr>
+											<td>Curso</td>
+											<td>{{ user.curso}}</td>
+										</tr>
+									{% else %}
+										<tr>
+											<td>Local de Atuação</td>
+											<td>{{ user.local_de_atuacao}}</td>
+										</tr>
+										<tr>
+											<td>Profissão</td>
+											<td>{{ user.profissao}}</td>
+										</tr>
+									{% endif %}
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
 			 	<div class="panel-footer">
+					<p>Entre em contato conosco pelo email:  3sippan@gmail.com</p>
 			   	<!--	{% if log.is_admin %}
 
 			   		{% endif %}

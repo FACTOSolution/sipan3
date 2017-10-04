@@ -33,10 +33,10 @@ class UserProfile (AbstractBaseUser, PermissionsMixin):
 
 	minicursos = models.ManyToManyField(Minicurso)
 	name = models.CharField(max_length=100)
-	curso = models.CharField(max_length=100, default="")
-	instituicao = models.CharField(max_length=200, default="")
-	local_de_atuacao = models.CharField(max_length=200, default="")
-	profissao = models.CharField(max_length=200, default="")
+	curso = models.CharField(max_length=100, null=True)
+	instituicao = models.CharField(max_length=200, null=True)
+	local_de_atuacao = models.CharField(max_length=200, null=True)
+	profissao = models.CharField(max_length=200, null=True)
 	cpf = models.CharField(max_length=11)
 	#validacao de cpf usando a lib localflavors no forms.py
 	phone = models.CharField(max_length=11)

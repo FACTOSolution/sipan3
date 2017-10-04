@@ -29,10 +29,8 @@
 					<p class="about">Este fenômeno não deve ser negligenciado, considerando que o processo do envelhecimento apresenta múltiplas dimensões e desafios para o indivíduo e sociedade. Nesse cenário, o III SIPPAN propõe discussões e reflexões a respeito da longevidade saudável, contemplando as esferas social, política e da saúde.</p>
 				</div>
 			</div>
-			<br><br><br><br><br><br>
-			<br><br><br><br><br><br>
-			<br><br><br><br><br><br>
 		</div>
+		<img id="divisor-frutas" src="{% static 'site_functions/img/back-sobre.svg' %}">
 	</section>
 
 	<section id="local">
@@ -57,35 +55,6 @@
 		<br>
 		<br>
 	</section>
-
-	<!--<section id="palestrantes" class="meu-bloco">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<h1 class='section_title'>Palestrantes</h1>
-					<div class='line'></div>
-				</div>
-			</div>
-
-			<br><br>
-
-			<div class="row">
-				{% for t in talks %}
-				<div class="col-md-4 col-sm-6">
-					<div class='thumbnail'>
-						<img class="img" src="media/{{t.talk_speaker_photo}}">
-						<div class="caption">
-							<h3>{{t.talk_speaker}}</h3>
-							<h4>{{t.talk_name}}</h4>
-							<h5>{{ t.talk_begin }}</h5>
-							<p>{{t.talk_description}}</p>
-						</div>
-					</div>
-				</div>
-				{% endfor %}
-			</div>
-		</div>
-	</section>-->
 
 	<section class="meu-bloco">
 		<div class="container">
@@ -114,49 +83,3 @@
 	</section>
 
 {% endblock %}
-
-
-<!--<section id="cronometro" class="meu-bloco">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12">
-				<h1 class='section_title'>Contagem Regressiva </h1>
-				<div class='line_org'></div>
-				<br>
-				<div id="chronos"></div>
-                <script>
-                    addchronos(2017, 5, 19, 8, 0, 0);
-                </script>
-			</div>
-		</div>
-	</div>
-</section>-->
-
-<!--<section id="minicursos" class="meu-bloco">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<h1 class='section_title'>Minicursos</h1>
-					<div class='line'></div>
-				</div>
-			</div>
-			<br><br>
-
-			<div class="row">
-			{% for s in scs %}
-				<div class="col-md-4 col-sm-6">
-					<div class="thumbnail">
-
-						<img src="media/{{s.short_course_cover}}">
-						<div class="caption">
-							<h3>{{ s.name }}</h3>
-							<p>{{ s.description }}</p>
-							<p>{{ s.begin }}</p>
-						</div>
-					</div>
-				</div>
-			{% endfor %}
-			</div>
-		</div>
-	</section>
--->

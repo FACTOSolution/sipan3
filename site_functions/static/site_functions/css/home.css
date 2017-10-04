@@ -7,7 +7,7 @@
 	margin-top: 50px;
 	height: 100%;
 	width: 100%;
-	background: url(../img/back-apresentacao.svg);
+	background: url(../img/back-apresentacao.jpg);
 	background-clip: border-box;
 	background-size: cover;
 	max-height: 100vmax;
@@ -24,9 +24,13 @@
 #sobre {
 	font-family: 'Roboto Slab', serif;
 	margin-top: -5px;
-	background: url(../img/back-sobre2.svg);
+	background: #5bc6d0;
 	background-size: cover;
 	background-repeat: no-repeat;
+}
+
+#divisor-frutas {
+	width: 100%;
 }
 
 #local {

@@ -5,19 +5,25 @@
 
 #apresentacao {
 	margin-top: 50px;
+	height: 100%;
 	width: 100%;
-	height: 50vmax;
+	background: url(../img/back-apresentacao.svg);
+	background-clip: border-box;
+	background-size: cover;
+	max-height: 100vmax;
 }
 
-#back-apresentacao {
+.div-apresentacao {
 	width: 100%;
-	height: 50vmax;
+	display: block;
+	position: relative;
+	min-height: 100vh;
+	line-height: 100%;
 }
 
 #sobre {
 	font-family: 'Roboto Slab', serif;
 	margin-top: -5px;
-	/*background: url(../img/back-sobre.svg);*/
 	background: url(../img/back-sobre2.svg);
 	background-size: cover;
 	background-repeat: no-repeat;

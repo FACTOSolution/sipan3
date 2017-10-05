@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^lista_presenca/$', views.lista_presenca, name='lista_presenca'),
     #url(r'^upload_receipt/(?P<user_id>[0-9]+)$', views.upload_receipt, name='upload_receipt'),
     #url(r'^upload_article/(?P<user_id>[0-9]+)$', views.upload_article, name='upload_article'),
+    url(r'^upload_certificate/(?P<user_id>[0-9]+)$', views.upload_certificate, name='upload_certificate'),
     url(r'^login/$', views.user_login, name='user_login'),
     url(r'^logout/$', views.user_logout, name='user_logout'),
     #url(r'^short_course_register/$', views.register_short_course, name='register_short_course'),

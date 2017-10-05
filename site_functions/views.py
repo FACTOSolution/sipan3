@@ -236,17 +236,17 @@ def user_detail(request, user_id):
 	if int(user_id) == int(request.session['member_id']):
 		user = get_object_or_404(UserProfile, id = request.session['member_id'])
 		print(user.comprovante)
+		cert_form = CertificateForm()
 		articles = Article.objects.all().filter(user=user.id)
-		return render(request, 'site_functions/user_details.html', {'user': user, 'log':request.session})
+		return render(request, 'site_functions/user_details.html', {'form': cert_form,'user': user, 'log':request.session})
 	else:
 		user = get_object_or_404(UserProfile, id = request.session['member_id'])
 		if has_permission(user,'retrieve_any_student'):
 			user_retrieve = get_object_or_404(UserProfile, id=user_id)
-			receipt_form = ReceiptForm()
-			article_form = ArticleForm()
+			cert_form = CertificateForm()
 			scs = user_retrieve.minicursos
 			articles_retrieve = Article.objects.all().filter(user=user_retrieve.id)
-			return render(request, 'site_functions/user_details.html', {'user': user_retrieve, 'log':request.session})
+			return render(request, 'site_functions/user_details.html', {'form': cert_form,'user': user_retrieve, 'log':request.session})
 
 def list_students(request,page):
 	#testado e funcionando
@@ -479,6 +479,24 @@ def register_talk(request):
 			return render(request, 'site_functions/register_talk.html', {'form': new_talk_form, 'log':request.session})
 		else:
 			return redirect(home)
+
+def upload_certificate(request, user_id):
+	#testado e funcionando
+	user = get_object_or_404(UserProfile, id=request.session['member_id'])
+	print(user.id)
+	if has_permission(user, 'list_all_students'):
+		if request.method == 'POST':
+			cert_form = CertificateForm(request.POST, request.FILES)
+			if cert_form.is_valid():
+				usr = get_object_or_404(UserProfile, id=user_id)
+				usr.certificado = request.FILES['document']
+				usr.save()
+				return redirect(user_detail,user_id)
+		else:
+			cert_form = CertificateForm()
+		return	render(request, 'site_functions/upload_certificate.html', {'form': cert_form, 'log': request.session})
+	else:
+		return HttpResponse("Você não tem permissão para acessar essa página.")
 """
 def upload_receipt(request, user_id):
 	if request.method == 'POST':

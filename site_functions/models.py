@@ -45,7 +45,7 @@ class UserProfile (AbstractBaseUser, PermissionsMixin):
 	#o password e setado como um campo de password no forms.py e nao aqui
 	email = models.EmailField(max_length=254, unique=True)
 	comprovante = models.ImageField(upload_to='comprovantes/', default=False)
-	certificado = models.FileField(upload_to='certificados/', default=False, validators=[validate_article_type])
+	certificado = models.FileField(upload_to='certificados/', default=False, null=True, validators=[validate_article_type])
 	have_article = models.BooleanField(default=False)
 	had_paid = models.BooleanField(default=False)
 	have_home = models.BooleanField(default=False)

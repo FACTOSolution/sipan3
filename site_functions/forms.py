@@ -48,6 +48,9 @@ class AdminForm(forms.ModelForm):
 class ReceiptForm(forms.Form):
 	image_file = forms.ImageField()
 
+class CertificateForm(forms.Form):
+	document = forms.FileField(label="Certificado")
+
 class ArticleForm(forms.ModelForm):
 	title = forms.CharField(label=("Titulo do artigo"))
 	document = forms.FileField(label="Arquivo")

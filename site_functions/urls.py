@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
  	url(r'^$', views.home, name='home'),
     url(r'^register/$', views.register, name='register'),
+    url(r'^recover_password/$', views.recover_password, name='recover_password'),
     url(r'^register_admin/$', views.admin_register, name='admin_register'),
     url(r'^list_admins/$', views.list_admins, name='list_admins'),
     url(r'^user_details/(?P<user_id>[0-9]+)$', views.user_detail, name='user_detail'),
@@ -27,6 +28,8 @@ urlpatterns = [
     #url(r'^accept_article/(?P<user_id>[0-9]+)/(?P<article_id>[0-9]+)$', views.accept_article, name='accept_article'),
     url(r'^download/(?P<path>.*)$', views.download, name='download'),
     url(r'^confirm/(?P<confirmation_code>.*)/(?P<user_id>[0-9]+)$', views.confirm, name='confirm'),
+    url(r'^alterate/(?P<user_id>[0-9]+)$', views.alterate, name='alterate'),
+    url(r'^new_pass/(?P<confirmation_code>.*)/(?P<user_id>[0-9]+)$', views.new_pass, name='new_pass'),
     url(r'^talk_register/$', views.register_talk, name='register_talk'),
     url(r'^del_user/(?P<user_id>[0-9]+)$', views.del_student, name='del_user'),
 ]

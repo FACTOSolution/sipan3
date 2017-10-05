@@ -66,6 +66,54 @@ def lista_presenca(request):
 	else:
 		raise Http404
 
+def recover_password(request):
+	if request.method == "POST":
+		try:
+			user = UserProfile.objects.get(email=request.POST.get('email', False))
+		except UserProfile.DoesNotExist:
+			return render(request, 'site_functions/recover_password.html', {'message': 'Usuário não cadastrado.'})
+		else:
+			user.confirmation_code = get_random_string(length=16)
+			user.save()
+			msg = u'Prezado ' + user.pronome_tratamento + ' ' + user.name + ',\n\nPara recuperar sua senha, clique no link abaixo: \n\n dominio/new_pass/' + str(user.confirmation_code) + "/" + str(user.id) + " \
+\n\nAtenciosamente,  \
+\nComissão Executiva do V SEMPGAN.\n \
+\nPara mais informações, entre em contato conosco através do site [colocar link]."
+			send_email('Recuperar senha',msg,user.email)
+			message = "Em breve você receberá um email para prosseguir com a alteração de senha."
+			return render(request, 'site_functions/recover_password.html', {'message': message})
+	else:
+		return render(request, 'site_functions/recover_password.html', {'message': "Digite seu email abaixo."})
+
+
+def new_pass(request, confirmation_code, user_id):
+	try:
+		user = get_object_or_404(UserProfile, id=user_id)
+	except:
+		return redirect(home)
+	else:
+		if user.confirmation_code == confirmation_code:
+			return redirect(alterate, user_id=user.id)
+		else:
+			return HttpResponse("Link inválido. Gere novamente.")
+
+
+
+def alterate(request, user_id):
+	user = get_object_or_404(UserProfile, id=user_id)
+	if request.method == "POST":
+		print("post")
+		if request.POST.get('pass1', False) == request.POST.get('pass2', False):
+			user.password = hs.make_password(request.POST.get('pass1', False))
+			user.confirmation_code = get_random_string(length=16)
+			user.save()
+			return redirect(user_login)
+		else:
+			return render(request, 'site_functions/new_pass.html', {'message': "As senhas digitadas não combinam. Tente novamente.", 'usr':user.id})
+	else:
+		return render(request, 'site_functions/new_pass.html', {'message': "Digite sua nova senha.", 'usr':user.id})
+
+
 def home(request):
 	#testado e funcionando
 	#scs = Minicurso.objects.all()
@@ -75,7 +123,7 @@ def home(request):
 def register(request):
 	#testado e funcionando
 	limit_users = 170
-	esgoted = 0
+	esgoted = 0 #cadastro online
 	registereds = 0
 	for x in UserProfile.objects.all():
 		if not has_permission(x, 'add_new_admins'):
@@ -88,7 +136,7 @@ def register(request):
 	response = client.request('pool.ntp.org')
 	time_ = time.localtime(response.tx_time)
 	if not (time_.tm_year == 2017 and time_.tm_mon == 10 and time_.tm_mday <= 15 and time_.tm_mday >= 9):
-		esgoted = 2 #fora do prazo de inscrições
+		esgoted = 0 #fora do prazo de inscrições
 
 	message = False
 	if request.method == "POST":
@@ -97,7 +145,7 @@ def register(request):
 			user = new_user.save()
 			user.password = hs.make_password(request.POST.get('password', False))
 			user.confirmation_code = get_random_string(length=16)
-			user.is_active = True
+			user.is_active = True #setar para false ao subir o site
 			user.save()
 			assign_role(user, 'student')
 			msg = u'Prezado ' + user.pronome_tratamento + ' ' + user.name + ',\n\nPara confirmar a sua inscrição no V Seminário do Programa de Pós-graduação em Alimentos e Nutrição clique no link abaixo: \n\n dominio/confirm/' + str(user.confirmation_code) + "/" + str(user.id) + " \

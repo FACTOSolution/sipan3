@@ -1,0 +1,47 @@
+{% extends 'site_functions/base.html' %}
+
+{% block content %}
+
+<section id="cronograma">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 class="texto-centro titulo">V SEMPGAN</h1>
+				<h1 class="texto-centro titulo">Alterar Senha</h1>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-3"></div>
+			<div class="col-sm-6" id="form-login">
+				<form method="post" action="{% url 'alterate' user_id=usr %}">
+				{% csrf_token %}
+					<div class="text-center">
+						{{message|safe|escape}}
+					</div>
+          <br>
+
+					<div class="form-group">
+						<label><b>Digite sua nova senha</b></label>
+						<input type="password" class="form-control" placeholder="Digite sua nova senha" name="pass1" required>
+					</div>
+
+          <div class="form-group">
+						<label><b>Digite novamente sua nova senha</b></label>
+						<input type="password" class="form-control" placeholder="Digite novamente sua nova senha" name="pass2" required>
+					</div>
+
+					<button class="btn btn-primary btn-block" type="submit">Alterar senha</button>
+
+				</form>
+			</div>
+			<div class="col-sm-3"></div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}

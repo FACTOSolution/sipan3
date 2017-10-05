@@ -54,25 +54,38 @@
 											<td>{{ user.profissao}}</td>
 										</tr>
 									{% endif %}
-									{% if user.certificado != "False" %}
 									<tr>
 										<td>Certificado</td>
-										<td><a target='_blank' href={% url 'download' path=user.certificado %} class="btn btn-sm btn-warning" >Download</a>
-											{% if log.is_admin %}
-											<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#CertificateModal">
-																		Submeter Certificado
-																		</button>
-								   		{% endif %}</td>
-									</tr>
+										<td>
+									{% if user.certificado != "False" %}
 
+										<a target='_blank' href={% url 'download' path=user.certificado %} class="btn btn-sm btn-warning" >Download</a>
+									{% else %}
+										Ao final do evento, você poderá realizar<br> o download do seu certificado aqui.<br>
 									{% endif %}
+										</td>
+									</tr>
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
 			 	<div class="panel-footer">
-					<p>Entre em contato conosco pelo email:  3sippan@gmail.com</p>
+
+					<div class="row">
+    <div class="col-xs-8 text-left">
+      <p>Entre em contato conosco pelo email:  3sippan@gmail.com</p>
+    </div>
+    <div class="col-xs-4 text-right">
+			{% if log.is_admin %}
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#CertificateModal">
+											Submeter Certificado
+											</button>
+			{% endif %}
+    </div>
+</div>
+
+
 
 			  	</div>
 		  	</div>

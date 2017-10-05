@@ -164,12 +164,18 @@ table {
     border-radius: 0 0 6px 6px
 }
 
+.table-title{
+  text-align: center;
+}
+
 </style>
 </head>
 
 <body>
-<h2>V Seminário do Programa de Pós-graduação em Alimentos e Nutrição</h2>
-<h2>Lista de Participantes</h2>
+  <div class="table-title">
+    <h2>V Seminário do Programa de Pós-graduação em Alimentos e Nutrição</h2>
+    <h2>Lista de Participantes</h2>
+  </div>
 <table class="bordered">
 {% for std in stds %}
       <tr>

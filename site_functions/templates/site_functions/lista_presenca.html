@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title>Table Style</title>
+	<title>Lista de Frequência</title>
 	<meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; width=device-width;">
   <style>
   .text-right{
@@ -20,6 +20,10 @@
 
   }
 
+	.table-title{
+		text-align: center;
+	}
+
   td{
      text-transform: uppercase;
   }
@@ -28,7 +32,8 @@
 
 <body>
 <div class="table-title">
-<h3>Data Table</h3>
+	<h3>V Seminário do Programa de Pós-graduação em Alimentos e Nutrição</h3>
+	<h3>Lista de Frequência - {{data}}</h3>
 </div>
     <table class="table-fill" border="1px solid">
       <thead>
@@ -40,7 +45,7 @@
         <tbody class="table-hover">
           {% for std in stds %}
             <tr>
-              <td class="text-left">{{std.name}}</td>
+              <td class="text-left">{{std}}</td>
               <td class="text-right"></td>
             </tr>
         {% endfor %}
@@ -49,3 +54,4 @@
 
 
   </body>
+</html>

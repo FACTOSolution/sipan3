@@ -17,6 +17,7 @@ from django.http import HttpResponse
 from django.template.loader import render_to_string
 import ntplib
 import time
+import locale
 
 from weasyprint import HTML
 
@@ -52,9 +53,17 @@ def lista_presenca(request):
 		students = []
 		for i in allS:
 			if i.is_active:
-				students.append(i)
-		students.sort(key=lambda x: x.name, reverse=False)
-		html_string = render_to_string('site_functions/lista_presenca.html', {'stds': students})
+				students.append(i.name)
+		locale.setlocale(locale.LC_ALL, "")
+		students.sort(key=locale.strxfrm)
+
+		client = ntplib.NTPClient()
+		response = client.request('pool.ntp.org')
+		time_ = time.localtime(response.tx_time)
+
+		data = str(time_.tm_mday) + "/" + str(time_.tm_mon) + "/" + str(time_.tm_year)
+
+		html_string = render_to_string('site_functions/lista_presenca.html', {'stds': students, 'data':data})
 		html = HTML(string=html_string)
 		html.write_pdf(target='/tmp/lista_presenca_sempgan5.pdf')
 		fs = FileSystemStorage('/tmp')
@@ -132,11 +141,6 @@ def register(request):
 
 	if registereds >=limit_users: esgoted = 1 #vagas esgotadas
 
-	client = ntplib.NTPClient()
-	response = client.request('pool.ntp.org')
-	time_ = time.localtime(response.tx_time)
-	if not (time_.tm_year == 2017 and time_.tm_mon == 10 and time_.tm_mday <= 15 and time_.tm_mday >= 9):
-		esgoted = 0 #fora do prazo de inscrições
 
 	message = False
 	if request.method == "POST":
@@ -156,6 +160,12 @@ def register(request):
 			message = "Você foi cadastrado(a). Em breve receberá um email para confirmação de cadastro. Clique no link recebido para confirmar e acessar sua conta."
 			return render(request, 'site_functions/register.html', {'form': new_user, 'log':request.session, 'status': esgoted, 'msg':message})
 	else:
+		client = ntplib.NTPClient()
+		response = client.request('pool.ntp.org')
+		time_ = time.localtime(response.tx_time)
+		if not (time_.tm_year == 2017 and time_.tm_mon == 10 and time_.tm_mday <= 15 and time_.tm_mday >= 9):
+			esgoted = 0 #fora do prazo de inscrições
+
 		new_user = UserForm()
 	return render(request, 'site_functions/register.html', {'form': new_user, 'log':request.session,  'status': esgoted, 'msg':message})
 

@@ -10,6 +10,14 @@ class UserForm(forms.ModelForm):
 	('PRO', u'Profissional')
 ,)
 
+	PRONOME_CHOICES = (
+	('Senhor', u'Senhor'),
+	('Senhora', u'Senhora'),
+	('Senhorita', u'Senhorita'),
+	('Doutor', u'Doutor'),
+	('Doutora', u'Doutora')
+,)
+
 	## MUDANÇAS FEITAS POR MIM(KÁSSIO)##
 		#atribui as classes para cada campo do formulário
 		#assim todos os campos estão estilizados com o tema do bootstrap
@@ -31,7 +39,8 @@ class UserForm(forms.ModelForm):
 	email = forms.EmailField(widget=forms.TextInput(attrs={'class' : 'form-control'}))
 	modalidade = forms.ChoiceField(label='Modalidade de Inscrição', choices=MODALIDADE_CHOICES,
 	 				widget=forms.Select(attrs={'onchange':'choiceFunc()'}))
-
+	pronome_tratamento = forms.ChoiceField(label='Pronome de Tratamento', choices=PRONOME_CHOICES,
+	 				widget=forms.Select(attrs={'class':'form-control'}))
 	class Meta:
 		model = UserProfile
 		fields = ('name', 'pronome_tratamento', 'cpf','email','phone','modalidade','instituicao', 'curso','profissao', 'local_de_atuacao','password')

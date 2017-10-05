@@ -1,5 +1,6 @@
 db.sqlite3
 media
 sipan3/__pycache__
+sipan3/config.py
 site_functions/__pycache__
 *.pyc

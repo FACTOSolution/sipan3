@@ -15,6 +15,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.template.loader import render_to_string
+import ntplib
+import time
 
 from weasyprint import HTML
 
@@ -73,13 +75,21 @@ def home(request):
 def register(request):
 	#testado e funcionando
 	limit_users = 170
-	esgoted = False
+	esgoted = 0
 	registereds = 0
 	for x in UserProfile.objects.all():
 		if not has_permission(x, 'add_new_admins'):
 			registereds += 1
 	mns = Minicurso.objects.all()
-	if registereds >=limit_users: esgoted = True
+
+	if registereds >=limit_users: esgoted = 1 #vagas esgotadas
+
+	client = ntplib.NTPClient()
+	response = client.request('pool.ntp.org')
+	time_ = time.localtime(response.tx_time)
+	if not (time_.tm_year == 2017 and time_.tm_mon == 10 and time_.tm_mday <= 15 and time_.tm_mday >= 9):
+		esgoted = 2 #fora do prazo de inscrições
+
 	message = False
 	if request.method == "POST":
 		new_user = UserForm(request.POST)

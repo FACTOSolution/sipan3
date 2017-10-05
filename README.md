@@ -14,6 +14,11 @@ SIPPAN is an event of a technical-scientific nature, held annually by the Gradua
 > Used in the image field on the models.
 > pip install pillow.
 
+* NTPLib
+
+> Used to catch the actual and right time.
+> pip install ntplib.
+
 * Magic
 
 > Used to the file validation for the articles.

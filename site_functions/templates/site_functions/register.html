@@ -18,7 +18,7 @@
 <section>
 	<br><br>
 	<div class="container">
-		{% if not status %}
+		{% if status == 0 %}
 			<div class="row">
 				<div class="col-sm-6">
 					<form method="POST" enctype="multipart/form-data" class="post-form" name='f'>
@@ -46,8 +46,11 @@
 				</div>
 				<div class="col-sm-2"></div>
 			</div>
-		{% else %}
+		{% elif status == 1 %}
 			<div id="sombraclara">Vagas esgotadas. Até o próximo SEMPGAN.</div>
+			<br>
+		{% else %}
+			<div id="sombraclara">Inscrições encerradas. Até o próximo SEMPGAN.</div>
 			<br>
 		{% endif %}
 	</div>

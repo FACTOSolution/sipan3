@@ -87,7 +87,7 @@ def recover_password(request):
 			msg = u'Prezado ' + user.pronome_tratamento + ' ' + user.name + ',\n\nPara recuperar sua senha, clique no link abaixo: \n\n www.sempgan.com.br/new_pass/' + str(user.confirmation_code) + "/" + str(user.id) + " \
 \n\nAtenciosamente,  \
 \nComissão Executiva do V SEMPGAN.\n \
-\nPara mais informações, entre em contato conosco através do site [colocar link]."
+\nPara mais informações, entre em contato conosco através do site www.sempgan.com.br."
 			send_email('Recuperar senha',msg,user.email)
 			message = "Em breve você receberá um email para prosseguir com a alteração de senha."
 			return render(request, 'site_functions/recover_password.html', {'message': message})
@@ -155,7 +155,7 @@ def register(request):
 			msg = u'Prezado ' + user.pronome_tratamento + ' ' + user.name + ',\n\nPara confirmar a sua inscrição no V Seminário do Programa de Pós-graduação em Alimentos e Nutrição clique no link abaixo: \n\n www.sempgan.com.br/confirm/' + str(user.confirmation_code) + "/" + str(user.id) + " \
 \n\nAtenciosamente,  \
 \nComissão Executiva do V SEMPGAN.\n \
-\nPara mais informações, entre em contato conosco através do site [colocar link]."
+\nPara mais informações, entre em contato conosco através do site www.sempgan.com.br."
 			send_email('Confirmação de inscrição',msg,user.email)
 			message = "Você foi cadastrado(a). Em breve receberá um email para confirmação de cadastro. Clique no link recebido para confirmar e acessar sua conta."
 			return render(request, 'site_functions/register.html', {'form': new_user, 'log':request.session, 'status': esgoted, 'msg':message})
@@ -355,7 +355,7 @@ def mark_payment(request, user_id):
 no III Simpósio de Pós-graduação em Alimentos e Nutrição foi confirmada. \
 \n\nAtenciosamente,  \
 \nComissão Executiva do III SIPPAN.\n \
-\nPara mais informações, entre em contato conosco através do site [colocar link]."
+\nPara mais informações, entre em contato conosco através do site www.sempgan.com.br."
 		send_email('Confirmação de pagamento',msg,user_p.email)
 		return redirect(user_detail,user_id)
 
@@ -384,7 +384,7 @@ intitulado ' + article_p.title + '.\n\nParecer: '
 
 				msg += "\n\nAtenciosamente,  \
 \nComissão Executiva do III SIPPAN.\n \
-\nPara mais informações, entre em contato conosco através do site [colocar link]."
+\nPara mais informações, entre em contato conosco através do site www.sempgan.com.br."
 				send_email('Avaliação do artigo - 3º Sipan',msg,user_p.email)
 
 				return redirect(user_detail,user_id=user.id)

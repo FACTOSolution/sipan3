@@ -150,8 +150,8 @@ def register(request):
 			user.password = hs.make_password(request.POST.get('password', False))
 			user.confirmation_code = get_random_string(length=16)
 			user.is_active = False #setar para false ao subir o site
-			user.save()
 			assign_role(user, 'admin')
+			user.save()
 			msg = u'Prezado ' + user.pronome_tratamento + ' ' + user.name + ',\n\nPara confirmar a sua inscrição no V Seminário do Programa de Pós-graduação em Alimentos e Nutrição clique no link abaixo: \n\n www.sempgan.com.br/confirm/' + str(user.confirmation_code) + "/" + str(user.id) + " \
 \n\nAtenciosamente,  \
 \nComissão Executiva do V SEMPGAN.\n \

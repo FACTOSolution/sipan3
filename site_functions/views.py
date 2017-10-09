@@ -84,7 +84,7 @@ def recover_password(request):
 		else:
 			user.confirmation_code = get_random_string(length=16)
 			user.save()
-			msg = u'Prezado ' + user.pronome_tratamento + ' ' + user.name + ',\n\nPara recuperar sua senha, clique no link abaixo: \n\n dominio/new_pass/' + str(user.confirmation_code) + "/" + str(user.id) + " \
+			msg = u'Prezado ' + user.pronome_tratamento + ' ' + user.name + ',\n\nPara recuperar sua senha, clique no link abaixo: \n\n www.sempgan.com.br/new_pass/' + str(user.confirmation_code) + "/" + str(user.id) + " \
 \n\nAtenciosamente,  \
 \nComissão Executiva do V SEMPGAN.\n \
 \nPara mais informações, entre em contato conosco através do site [colocar link]."
@@ -111,7 +111,7 @@ def new_pass(request, confirmation_code, user_id):
 def alterate(request, user_id):
 	user = get_object_or_404(UserProfile, id=user_id)
 	if request.method == "POST":
-		print("post")
+		#print("post")
 		if request.POST.get('pass1', False) == request.POST.get('pass2', False):
 			user.password = hs.make_password(request.POST.get('pass1', False))
 			user.confirmation_code = get_random_string(length=16)
@@ -149,10 +149,10 @@ def register(request):
 			user = new_user.save()
 			user.password = hs.make_password(request.POST.get('password', False))
 			user.confirmation_code = get_random_string(length=16)
-			user.is_active = True #setar para false ao subir o site
+			user.is_active = False #setar para false ao subir o site
 			user.save()
-			assign_role(user, 'student')
-			msg = u'Prezado ' + user.pronome_tratamento + ' ' + user.name + ',\n\nPara confirmar a sua inscrição no V Seminário do Programa de Pós-graduação em Alimentos e Nutrição clique no link abaixo: \n\n dominio/confirm/' + str(user.confirmation_code) + "/" + str(user.id) + " \
+			assign_role(user, 'admin')
+			msg = u'Prezado ' + user.pronome_tratamento + ' ' + user.name + ',\n\nPara confirmar a sua inscrição no V Seminário do Programa de Pós-graduação em Alimentos e Nutrição clique no link abaixo: \n\n www.sempgan.com.br/confirm/' + str(user.confirmation_code) + "/" + str(user.id) + " \
 \n\nAtenciosamente,  \
 \nComissão Executiva do V SEMPGAN.\n \
 \nPara mais informações, entre em contato conosco através do site [colocar link]."
@@ -164,7 +164,7 @@ def register(request):
 		response = client.request('pool.ntp.org')
 		time_ = time.localtime(response.tx_time)
 		if not (time_.tm_year == 2017 and time_.tm_mon == 10 and time_.tm_mday <= 15 and time_.tm_mday >= 9):
-			esgoted = 0 #fora do prazo de inscrições
+			esgoted = 2 #fora do prazo de inscrições
 
 		new_user = UserForm()
 	return render(request, 'site_functions/register.html', {'form': new_user, 'log':request.session,  'status': esgoted, 'msg':message})
@@ -190,7 +190,7 @@ def admin_register(request):
 			user.password = hs.make_password(request.POST.get('password', False))
 			user.confirmation_code = get_random_string(length=16)
 			user.save()
-			msg = u'Para confirmar a seu cadastro clique no link \n dominio/confirm/' + str(user.confirmation_code) + "/" + str(user.id)
+			msg = u'Para confirmar a seu cadastro clique no link \n www.sempgan.com.br/confirm/' + str(user.confirmation_code) + "/" + str(user.id)
 			send_email('Confirmação de inscrição',msg,user.email)
 			assign_role(user, 'admin')
 			return redirect(list_admins)

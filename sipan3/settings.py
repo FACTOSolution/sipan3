@@ -164,4 +164,4 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/viniciuspablo/Projetos/Python/Django/sipan3/site_functions/static'
+STATIC_ROOT = '/home/Factos/sipan3/site_functions/static'

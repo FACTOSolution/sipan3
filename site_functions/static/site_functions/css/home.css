@@ -3,21 +3,41 @@
 	src: url(../fonts/Offside/Offside-Regular.ttf);
 }
 
+.font-offside {
+	font-family: Offside;
+}
+
 #apresentacao {
 	height: 100%;
 	width: 100%;
 	background: url(../img/VSEMPGANV.jpg);
-	background-clip: border-box;
-	background-size: cover;
-	background-position: center center;
+    background-clip: border-box;
+    background-size: cover;
+    background-position: center center;
 }
 
 .div-apresentacao {
+	height: 80vh;
 	width: 100%;
-	display: block;
-	position: relative;
-	min-height: 100vh;
-	line-height: 100%;
+    display: block;
+    box-sizing: border-box;
+    position: relative;
+    line-height: 100%;
+}
+
+.div-logo {
+    max-width: 900px;
+    width: 90%;
+    left: 5%;
+    right: 5%;
+    position: relative;
+    display: inline-block;
+    height: 100%;
+}
+
+#logo {
+	width: 100%;
+	height: 100%;
 }
 
 #sobre {

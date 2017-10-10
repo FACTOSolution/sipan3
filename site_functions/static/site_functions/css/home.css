@@ -77,7 +77,8 @@
 }
 
 .realizacao {
-	max-height: 130px;
+	max-height: 150px;
+	padding-top: 20px; 
 }
 
 .prex {

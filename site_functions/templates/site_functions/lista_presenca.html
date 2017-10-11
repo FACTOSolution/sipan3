@@ -4,35 +4,37 @@
 	<title>Lista de Frequência</title>
 	<meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; width=device-width;">
   <style>
-  .text-right{
-    min-width: 100px;
-    padding: 20px;
-  }
+  
+    table, th, tr, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
 
-  .text-left{
-    padding: 20px;
-  }
+    td {
+       text-transform: uppercase;
+    }
 
+    .text-right {
+      width: 300px;
+      padding: 10px;
+    }
 
-  table, th, tr, td{
-    border: 1px solid black;
-    border-collapse: collapse;
+    .text-left {
+      font-size: 0.8em;
+      width: 300px;
+      padding: 10px;
+    }
 
-  }
+  	.table-title {
+  		text-align: center;
+  	}
 
-	.table-title{
-		text-align: center;
-	}
-
-  td{
-     text-transform: uppercase;
-  }
   </style>
 </head>
 
 <body>
 <div class="table-title">
-	<h3>V Seminário do Programa de Pós-graduação em Alimentos e Nutrição</h3>
+	<h5>V Seminário do Programa de Pós-graduação em Alimentos e Nutrição</h5>
 	<h3>Lista de Frequência - {{data}}</h3>
 </div>
     <table class="table-fill" border="1px solid">

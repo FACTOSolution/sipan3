@@ -27,9 +27,9 @@
 
 .div-logo {
     max-width: 900px;
-    width: 90%;
-    left: 5%;
-    right: 5%;
+    width: 80%;
+    left: 10%;
+    right: 10%;
     position: relative;
     display: inline-block;
     height: 100%;

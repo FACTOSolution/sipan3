@@ -163,7 +163,7 @@ def register(request):
 		client = ntplib.NTPClient()
 		response = client.request('pool.ntp.org')
 		time_ = time.localtime(response.tx_time)
-		if not (time_.tm_year == 2017 and time_.tm_mon == 10 and time_.tm_mday <= 15 and time_.tm_mday >= 9):
+		if not (time_.tm_year == 2017 and ((time_.tm_mon == 10 and time_.tm_mday >= 9) or (time_.tm_mon == 11 and time_.tm_mday <= 15))):
 			esgoted = 2 #fora do prazo de inscrições
 
 		new_user = UserForm()
